@@ -3,6 +3,8 @@ package br.ufrn.imd.modelo;
 import javax.swing.JFrame;
 
 public class Screen{
+    private Diretorio diretorio;
+
     public Screen(){
         JFrame login = new JFrame("Login");
         login.setVisible(true);
