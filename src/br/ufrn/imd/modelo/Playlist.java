@@ -6,8 +6,8 @@ public class Playlist {
     private String nome;
     private ArrayList<Musica> musicas;
 
-    Playlist() {
-        musicas = new ArrayList();
+    public Playlist() {
+        musicas = new ArrayList<>();
     }
 
     public ArrayList<Musica> getMusicas() {

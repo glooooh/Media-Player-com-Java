@@ -1,10 +1,8 @@
 package br.ufrn.imd.visao;
 
-import br.ufrn.imd.modelo.Screen;
-
 public class MediaPlayer {
     public void exibirInterfaceGrafica() {
-        new Screen();
+        new TelaLogin();
     }
 
     public static void main(String[] args) {

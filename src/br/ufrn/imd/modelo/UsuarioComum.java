@@ -1,8 +1,8 @@
 package br.ufrn.imd.modelo;
 
 public class UsuarioComum extends Usuario{
-    public boolean fazerLogin() {
-        return true;
+    public UsuarioComum(String nome, String login, String senha) {
+        super(nome, login, senha);
     }
 
     public boolean adicionarDiretorios() {
