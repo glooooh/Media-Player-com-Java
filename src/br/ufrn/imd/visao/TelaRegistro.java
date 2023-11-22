@@ -94,6 +94,8 @@ public class TelaRegistro extends JFrame implements ActionListener {
             JComboBox<String> tipoCampo) {
         String tipo;
 
+        //Realizar validação das senhas (Caracteres Inválidos)
+
         if(tipoCampo.getSelectedIndex() == 0){
             tipo = "V";
         }else{
