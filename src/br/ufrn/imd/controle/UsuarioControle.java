@@ -16,9 +16,9 @@ public class UsuarioControle {
 
     public boolean cadastrarUsuarioNoBanco(String nome, String login, String senha, String tipo) {
         Usuario user;
-        if (tipo == "V") {
+        if (tipo.equals("V")) {
             user = new UsuarioVIP(nome, login, senha);
-        } else if (tipo == "C") {
+        } else if (tipo.equals("C")) {
             user = new UsuarioComum(nome, login, senha);
         } else {
             return false;
@@ -26,5 +26,10 @@ public class UsuarioControle {
 
         UsuarioDAO usuarioDao = new UsuarioDAO();
         return usuarioDao.cadastrarUsuario(user);
+    }
+
+    public boolean fazerLogin(String login, String senha) {
+        UsuarioDAO usuarioDao = new UsuarioDAO();
+        return usuarioDao.fazerLoginUsuario(login, senha);
     }
 }

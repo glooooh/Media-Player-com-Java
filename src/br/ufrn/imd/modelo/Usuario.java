@@ -36,7 +36,7 @@ public abstract class Usuario {
     }
 
     public boolean fazerLogin(String senha) {
-        if (senha == this.getSenha()) {
+        if (senha.equals(this.getSenha())) {
             return true;
         }
 
