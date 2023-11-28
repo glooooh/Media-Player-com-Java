@@ -16,6 +16,10 @@ import br.ufrn.imd.modelo.UsuarioVIP;
 
 public class UsuarioControle {
 
+    public UsuarioControle() {
+
+    }
+
     public boolean cadastrarUsuarioNoBanco(String nome, String login, String senha, String tipo) {
         UsuarioComum user;
         if (tipo.equals("V")) {
@@ -48,5 +52,9 @@ public class UsuarioControle {
     public boolean fazerLogin(String login, String senha) {
         UsuarioDAO usuarioDao = new UsuarioDAO();
         return usuarioDao.fazerLoginUsuario(login, senha);
+    }
+
+    public boolean adicionarPlaylist(String nome) {
+        return true;
     }
 }
