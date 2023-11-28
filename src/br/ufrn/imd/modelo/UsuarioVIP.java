@@ -14,6 +14,11 @@ public class UsuarioVIP extends UsuarioComum {
         return playlists;
     }
 
+    @Override
+    public String getTipo() {
+        return "V";
+    }
+
     public void setPlaylists(ArrayList<Playlist> playlists) {
         this.playlists = playlists;
     }

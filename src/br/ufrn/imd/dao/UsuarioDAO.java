@@ -1,20 +1,21 @@
 package br.ufrn.imd.dao;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import br.ufrn.imd.modelo.Usuario;
 import br.ufrn.imd.modelo.UsuarioComum;
 import br.ufrn.imd.modelo.UsuarioVIP;
 
 public class UsuarioDAO {
-    private ArrayList<Usuario> lista_de_usuarios;
+    private ArrayList<UsuarioComum> lista_de_usuarios;
 
     public UsuarioDAO() {
         lista_de_usuarios = new ArrayList<>();
@@ -53,16 +54,16 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean cadastrarUsuario(Usuario usuarioNovo) {
-        for (Usuario usuario : lista_de_usuarios) {
-            if (usuarioNovo.getLogin() == usuario.getLogin()) {
+    public boolean cadastrarUsuario(UsuarioComum usuarioNovo) {
+        for (UsuarioComum usuario : lista_de_usuarios) {
+            if (usuarioNovo.getLogin().equals(usuario.getLogin())) {
                 return false;
             }
         }
 
         lista_de_usuarios.add(usuarioNovo);
 
-        String nomeArquivo = "usuarios.txt"; 
+        String nomeArquivo = "usuarios.txt";
 
         try {
             File arquivoUsuarios = new File(nomeArquivo);
@@ -70,7 +71,8 @@ public class UsuarioDAO {
                 arquivoUsuarios.createNewFile();
             }
 
-            FileWriter fw = new FileWriter(arquivoUsuarios.getAbsoluteFile(), true); // true para adicionar no final do arquivo
+            FileWriter fw = new FileWriter(arquivoUsuarios.getAbsoluteFile(), true); // true para adicionar no final do
+                                                                                     // arquivo
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Texto a ser escrito no arquivo
@@ -80,7 +82,8 @@ public class UsuarioDAO {
             } else {
                 tipo = "C";
             }
-            String texto = usuarioNovo.getLogin() + " " + usuarioNovo.getSenha() + " " + usuarioNovo.getNome() + " " + tipo;
+            String texto = usuarioNovo.getLogin() + " " + usuarioNovo.getSenha() + " " + usuarioNovo.getNome() + " "
+                    + tipo;
 
             // Escrever no arquivo
             bw.write(texto);
@@ -92,14 +95,123 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
 
-
-
         return true;
     }
 
+    public ArrayList<UsuarioComum> exibirUsuarios() {
+        return lista_de_usuarios;
+    }
+
+    public boolean removerUsuario(String login, String senha) {
+        for (UsuarioComum usuario : lista_de_usuarios) {
+            if (login.equals(usuario.getLogin()) && senha.equals(usuario.getSenha())) {
+                String caminho = System.getProperty("user.dir");
+                String separador = System.getProperty("file.separator");
+
+                File arquivoUsuarios = new File(caminho + separador + "usuarios.txt");
+
+                try {
+                    FileReader fr = new FileReader(arquivoUsuarios);
+                    BufferedReader reader = new BufferedReader(fr);
+
+                    String linha = reader.readLine();
+                    ArrayList<String> salvarLinhas = new ArrayList<>();
+
+                    while (linha != null) {
+                        // Falha de segurança
+                        if (linha.indexOf(login) == 0 || linha.indexOf(senha) == 0) {
+                            salvarLinhas.add(linha);
+                        }
+                    }
+
+                    reader.close();
+                    fr.close();
+
+                    FileWriter apagarArquivo = new FileWriter(arquivoUsuarios, true);
+                    apagarArquivo.close();
+
+                    FileWriter fw = new FileWriter(arquivoUsuarios);
+                    BufferedWriter writer = new BufferedWriter(fw);
+
+                    for (int i = 0; i < salvarLinhas.size(); i++) {
+                        writer.write(salvarLinhas.get(i));
+                        writer.newLine();
+                    }
+
+                    fw.close();
+                    writer.close();
+                    return true;
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean editarUsuario(String login, String atributoNovo, String tipoAtributo) {
+        for (UsuarioComum usuario : lista_de_usuarios) {
+            if (login.equals(usuario.getLogin())) {
+                String caminho = System.getProperty("user.dir");
+                String separador = System.getProperty("file.separator");
+
+                File arquivoUsuarios = new File(caminho + separador + "usuarios.txt");
+
+                try {
+                    FileReader fr = new FileReader(arquivoUsuarios);
+                    BufferedReader reader = new BufferedReader(fr);
+
+                    String linha = reader.readLine();
+                    ArrayList<String> salvarLinhas = new ArrayList<>();
+
+                    while (linha != null) {
+                        // Falha de segurança
+                        if (linha.indexOf(login) >= 0) {
+                            if (tipoAtributo.equals("N")) {
+                                linha = usuario.getLogin() + " " + usuario.getSenha() + " " + atributoNovo + " "
+                                        + usuario.getTipo();
+                            } else if (tipoAtributo.equals("S")) {
+                                linha = usuario.getLogin() + " " + atributoNovo + " " + usuario.getNome() + " "
+                                        + usuario.getTipo();
+                            } else if (tipoAtributo.equals("T")) {
+                                linha = usuario.getLogin() + " " + usuario.getSenha() + " " + usuario.getNome() + " "
+                                        + atributoNovo;
+                            }
+                            salvarLinhas.add(linha);
+                        } else {
+                            salvarLinhas.add(linha);
+                        }
+                    }
+
+                    reader.close();
+                    fr.close();
+
+                    FileWriter apagarArquivo = new FileWriter(arquivoUsuarios, true);
+                    apagarArquivo.close();
+
+                    FileWriter fw = new FileWriter(arquivoUsuarios);
+                    BufferedWriter writer = new BufferedWriter(fw);
+
+                    for (int i = 0; i < salvarLinhas.size(); i++) {
+                        writer.write(salvarLinhas.get(i));
+                        writer.newLine();
+                    }
+
+                    fw.close();
+                    writer.close();
+                    return true;
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        }
+
+        return false;
+    }
+
     public boolean fazerLoginUsuario(String login, String senha) {
-        carregarUsuarios();
-        for (Usuario usuario : lista_de_usuarios) {
+        for (UsuarioComum usuario : lista_de_usuarios) {
             if (login.equals(usuario.getLogin())) {
                 return usuario.fazerLogin(senha);
             }
@@ -107,5 +219,4 @@ public class UsuarioDAO {
 
         return false;
     }
-
 }

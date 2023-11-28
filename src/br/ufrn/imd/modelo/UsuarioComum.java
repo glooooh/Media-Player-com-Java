@@ -12,7 +12,7 @@ public class UsuarioComum {
         this.login = login;
         this.senha = senha;
     }
-    
+
     public String getLogin() {
         return login;
     }
@@ -23,6 +23,10 @@ public class UsuarioComum {
 
     public String getSenha() {
         return senha;
+    }
+
+    public String getTipo() {
+        return "C";
     }
 
     public void setLogin(String login) {
