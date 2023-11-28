@@ -7,6 +7,9 @@ import javax.swing.JButton;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -17,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TelaMusicPlayer extends JFrame implements ActionListener {
+    private UsuarioControle controller;
 
     public TelaMusicPlayer() {
         controller = new UsuarioControle();
@@ -30,15 +34,31 @@ public class TelaMusicPlayer extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JMenuBar barra = new
+        JMenuBar barra = new JMenuBar();
 
-        loginBtn.addActionListener(action -> {
-            this.logar(action, loginCampo, senhaCampo);
+        JMenu opcoes = new JMenu("Opções");
+        JMenu sair = new JMenu("Sair");
+
+        JMenuItem alterarNome = new JMenuItem("Alterar Nome");
+        JMenuItem alterarSenha = new JMenuItem("Alterar Senha");
+        JMenuItem alterarTipo = new JMenuItem("Alterar Tipo de Usuário");
+
+        setJMenuBar(barra);
+
+        barra.add(opcoes);
+        barra.add(sair);
+
+        opcoes.add(alterarNome);
+        opcoes.add(alterarSenha);
+        opcoes.add(alterarTipo);
+
+        alterarNome.addActionListener(action -> {
+
         });
 
-        panel.add(loginLabel);
+        // panel.add(loginLabel);
 
-        add(panel);
+        // add(panel);
         setVisible(true);
     }
 

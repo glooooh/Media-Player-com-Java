@@ -72,10 +72,11 @@ public class TelaLogin extends JFrame implements ActionListener {
     }
 
     private void logar(ActionEvent ActionEvente, JTextField loginCampo, JTextField senhaCampo) {
-        if(controller.fazerLogin(loginCampo.getText(), senhaCampo.getText())){
-            JOptionPane.showMessageDialog(null, "Login Bem-Sucedido" , "Titulo", JOptionPane.INFORMATION_MESSAGE);
+        if (controller.fazerLogin(loginCampo.getText(), senhaCampo.getText())) {
+            new TelaMusicPlayer();
+            dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos" , "Titulo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos", "Titulo", JOptionPane.ERROR_MESSAGE);
         }
     }
 
