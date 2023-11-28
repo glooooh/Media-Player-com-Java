@@ -2,7 +2,7 @@ package br.ufrn.imd.modelo;
 
 import java.util.ArrayList;
 
-public class UsuarioVIP extends Usuario {
+public class UsuarioVIP extends UsuarioComum {
     private ArrayList<Playlist> playlists;
 
     public UsuarioVIP(String nome, String login, String senha) {
@@ -26,8 +26,8 @@ public class UsuarioVIP extends Usuario {
         return true;
     }
     
-    public void exibirMusicas() {
-
+    public ArrayList<Musica> exibirMusicas() {
+        return null;
     }
     
     public boolean tocarMusica() {
