@@ -1,6 +1,6 @@
 package br.ufrn.imd.visao;
 
-import br.ufrn.imd.modelo.Diretorio;
+//import br.ufrn.imd.modelo.Diretorio;
 import br.ufrn.imd.controle.UsuarioControle;
 
 import javax.swing.JFrame;
@@ -19,7 +19,7 @@ import java.awt.Dimension;
 // import java.awt.FlowLayout;
 
 public class TelaLogin extends JFrame implements ActionListener {
-    private Diretorio diretorio;
+    //private Diretorio diretorio;
     private UsuarioControle controller;
 
     public TelaLogin() {

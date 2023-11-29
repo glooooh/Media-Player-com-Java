@@ -1,7 +1,5 @@
 package br.ufrn.imd.visao;
 
-import br.ufrn.imd.modelo.Diretorio;
-
 import javax.swing.JFrame;
 
 import java.awt.event.ActionEvent;
@@ -27,7 +25,7 @@ import java.awt.Dimension;
 // import java.awt.FlowLayout;
 
 public class TelaRegistro extends JFrame implements ActionListener {
-    private Diretorio diretorio;
+    //private Diretorio diretorio;
     private UsuarioControle controller;
 
     public TelaRegistro() {

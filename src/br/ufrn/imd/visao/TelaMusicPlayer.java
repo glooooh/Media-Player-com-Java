@@ -1,18 +1,18 @@
 package br.ufrn.imd.visao;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
+//import javax.swing.JButton;
 
 // import br.ufrn.imd.modelo.Diretorio;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+//import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+//import javax.swing.JPasswordField;
+//import javax.swing.JTextField;
 
 import br.ufrn.imd.controle.UsuarioControle;
 
