@@ -3,6 +3,8 @@ package br.ufrn.imd.controle;
 import java.util.ArrayList;
 
 import br.ufrn.imd.dao.UsuarioDAO;
+import br.ufrn.imd.modelo.Musica;
+import br.ufrn.imd.modelo.Playlist;
 import br.ufrn.imd.modelo.UsuarioComum;
 import br.ufrn.imd.modelo.UsuarioVIP;
 
@@ -15,10 +17,6 @@ import br.ufrn.imd.modelo.UsuarioVIP;
  */
 
 public class UsuarioControle {
-
-    public UsuarioControle() {
-
-    }
 
     public boolean cadastrarUsuarioNoBanco(String nome, String login, String senha, String tipo) {
         UsuarioComum user;
@@ -54,7 +52,38 @@ public class UsuarioControle {
         return usuarioDao.fazerLoginUsuario(login, senha);
     }
 
-    public boolean adicionarPlaylist(String nome) {
-        return true;
+    public boolean cadastrarPlaylist(String nomePlaylist, UsuarioVIP usuarioLogado) {
+        PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
+        
+        return playlist_controle.cadastrarPlaylist(nomePlaylist);
+    }
+
+    public ArrayList<Playlist> listarPlaylists(UsuarioVIP usuarioLogado) {
+        PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
+        return playlist_controle.listarPlaylist();
+    }
+
+    public boolean adicionarMusica(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeMusica, String artista) {
+        PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
+        MusicaControle musica_controle = new MusicaControle();
+        Musica musica = musica_controle.buscarMusicaNoBanco(nomeMusica, artista);
+        return playlist_controle.adicionarMusica(nomePlaylist, musica);
+    }
+
+    public boolean removerMusica(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeMusica, String artista) {
+        PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
+        MusicaControle musica_controle = new MusicaControle();
+        Musica musica = musica_controle.buscarMusicaNoBanco(nomeMusica, artista);
+        return playlist_controle.removerMusica(nomePlaylist, musica);
+    }
+
+    public boolean editarPlaylist(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeNovo) {
+        PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
+        return playlist_controle.editarPlaylistNoBanco(nomePlaylist, nomeNovo);
+    }
+
+    public boolean removerPlaylist(UsuarioVIP usuarioLogado, String nomePlaylist) {
+        PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
+        return playlist_controle.removerPlaylistDoBanco(nomePlaylist);
     }
 }
