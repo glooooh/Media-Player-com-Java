@@ -93,9 +93,18 @@ public class MusicaDAO {
         return listaMusicas;
     }
 
-    public boolean editarMusica(String nome, String artista, String novoAtributo, String tipoAtributo) {
+    public Musica buscarMusica(String nome, String artista) {
         for (Musica musica : listaMusicas) {
             if (nome.equals(musica.getNome()) && artista.equals(musica.getArtista())) {
+                return musica;
+            }
+        }
+        return null;
+    }
+
+    public boolean editarMusica(Musica musicaEditada, String novoAtributo, String tipoAtributo) {
+        for (Musica musica : listaMusicas) {
+            if ((musicaEditada.getNome()).equals(musica.getNome()) && (musicaEditada.getArtista()).equals(musica.getArtista())) {
                 String caminho = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
 
@@ -110,7 +119,7 @@ public class MusicaDAO {
 
                     while (linha != null) {
                         // Falha de segurança
-                        if (linha.indexOf(nome) >= 0 && linha.indexOf(artista) >= 0) {
+                        if (linha.indexOf(musicaEditada.getNome()) >= 0 && linha.indexOf(musicaEditada.getArtista()) >= 0) {
                             if (tipoAtributo.equals("N")) {
                                 linha = novoAtributo + " — " + musica.getArtista() + " — " + musica.getCaminho();
                             } else if (tipoAtributo.equals("A")) {
@@ -151,9 +160,9 @@ public class MusicaDAO {
     }
 
     /* TESTAR, VAI DAR ERRADO */
-    public boolean removerMusica(String nome, String artista) {
+    public boolean removerMusica(Musica musicaRemovida) {
         for (Musica musica : listaMusicas) {
-            if (nome.equals(musica.getNome()) && artista.equals(musica.getArtista())) {
+            if ((musicaRemovida.getNome()).equals(musica.getNome()) && (musicaRemovida.getArtista()).equals(musica.getArtista())) {
                 String caminho = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
 
@@ -168,7 +177,7 @@ public class MusicaDAO {
 
                     while (linha != null) {
                         // Falha de segurança
-                        if (linha.indexOf(nome) == 0 || linha.indexOf(artista) == 0) {
+                        if (linha.indexOf(musicaRemovida.getNome()) == 0 || linha.indexOf(musicaRemovida.getArtista()) == 0) {
                             salvarLinhas.add(linha);
                         }
                     }

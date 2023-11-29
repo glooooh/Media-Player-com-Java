@@ -21,8 +21,31 @@ public class MusicaControle {
         return musicaDao.exibirMusicas();
     }
 
-    public boolean editarMusicas(String nome, String artista, String novoAtributo, String tipoAtributo) {
+    public Musica buscarMusicaNoBanco(String nome, String artista) {
         MusicaDAO musicaDao = new MusicaDAO();
-        return musicaDao.editarMusica(nome, artista, novoAtributo, tipoAtributo);
+        Musica musica = musicaDao.buscarMusica(nome, artista);
+        return musica;
+    }
+
+    public boolean editarMusicasNoBanco(String nome, String artista, String novoAtributo, String tipoAtributo) {
+        Musica musica = buscarMusicaNoBanco(nome, artista);
+
+        if (musica == null) {
+            return false;
+        }
+
+        MusicaDAO musicaDao = new MusicaDAO();
+        return musicaDao.editarMusica(musica, novoAtributo, tipoAtributo);
+    }
+
+    public boolean removerMusicasDoBanco(String nome, String artista) {
+        Musica musica = buscarMusicaNoBanco(nome, artista);
+
+        if (musica == null) {
+            return false;
+        }
+
+        MusicaDAO musicaDao = new MusicaDAO();
+        return musicaDao.removerMusica(musica);
     }
 }
