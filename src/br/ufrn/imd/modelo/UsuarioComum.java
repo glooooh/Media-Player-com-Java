@@ -25,8 +25,8 @@ public class UsuarioComum {
         return senha;
     }
 
-    public String getTipo() {
-        return "C";
+    public Boolean ehVIP() {
+        return false;
     }
 
     public void setLogin(String login) {

@@ -15,8 +15,8 @@ public class UsuarioVIP extends UsuarioComum {
     }
 
     @Override
-    public String getTipo() {
-        return "V";
+    public Boolean ehVIP() {
+        return true;
     }
 
     public void setPlaylists(ArrayList<Playlist> playlists) {

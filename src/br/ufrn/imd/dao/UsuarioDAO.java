@@ -165,15 +165,17 @@ public class UsuarioDAO {
                     String linha = reader.readLine();
                     ArrayList<String> salvarLinhas = new ArrayList<>();
 
+                    String tipo = usuario.ehVIP() ? "V" : "C";
+
                     while (linha != null) {
                         // Falha de segurança
                         if (linha.indexOf(login) >= 0) {
                             if (tipoAtributo.equals("N")) {
                                 linha = usuario.getLogin() + " " + usuario.getSenha() + " " + atributoNovo + " "
-                                        + usuario.getTipo();
+                                        + tipo;
                             } else if (tipoAtributo.equals("S")) {
                                 linha = usuario.getLogin() + " " + atributoNovo + " " + usuario.getNome() + " "
-                                        + usuario.getTipo();
+                                        + tipo;
                             } else if (tipoAtributo.equals("T")) {
                                 linha = usuario.getLogin() + " " + usuario.getSenha() + " " + usuario.getNome() + " "
                                         + atributoNovo;
