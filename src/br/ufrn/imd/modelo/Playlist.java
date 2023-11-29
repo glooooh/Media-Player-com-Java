@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Playlist {
     private String nome;
-    private UsuarioComum usuario;
+    private UsuarioVIP usuario;
     private ArrayList<Musica> musicas;
 
-    public Playlist(String nome, UsuarioComum usuario) {
+    public Playlist(String nome, UsuarioVIP usuario) {
         this.nome = nome;
         this.usuario = usuario;
         this.musicas = new ArrayList<>();
@@ -33,7 +33,11 @@ public class Playlist {
         this.nome = nome;
     }
 
-    public void setUsuario(UsuarioComum usuario) {
+    public void setUsuario(UsuarioVIP usuario) {
         this.usuario = usuario;
+    }
+
+    public void adicionarMusica(Musica musica) {
+        this.musicas.add(musica);
     }
 }
