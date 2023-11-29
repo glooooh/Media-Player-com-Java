@@ -1,7 +1,7 @@
 package br.ufrn.imd.visao;
 
-//import br.ufrn.imd.modelo.Diretorio;
-import br.ufrn.imd.controle.UsuarioControle;
+import br.ufrn.imd.controle.GerenciadorControle;
+
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,10 +20,10 @@ import java.awt.Dimension;
 
 public class TelaLogin extends JFrame implements ActionListener {
     //private Diretorio diretorio;
-    private UsuarioControle controller;
+    private GerenciadorControle controller;
 
     public TelaLogin() {
-        controller = new UsuarioControle();
+        controller = new GerenciadorControle();
 
         setTitle("Music Player");
         setSize(800, 400);

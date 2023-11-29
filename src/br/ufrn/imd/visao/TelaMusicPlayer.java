@@ -14,16 +14,16 @@ import javax.swing.JPanel;
 //import javax.swing.JPasswordField;
 //import javax.swing.JTextField;
 
-import br.ufrn.imd.controle.UsuarioControle;
+import br.ufrn.imd.controle.GerenciadorControle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TelaMusicPlayer extends JFrame implements ActionListener {
-    private UsuarioControle controller;
+    private GerenciadorControle controller;
 
     public TelaMusicPlayer() {
-        controller = new UsuarioControle();
+        controller = new GerenciadorControle();
 
         setTitle("Music Player");
         setSize(800, 400);
@@ -37,16 +37,32 @@ public class TelaMusicPlayer extends JFrame implements ActionListener {
         JMenuBar barra = new JMenuBar();
 
         JMenu opcoes = new JMenu("Opções");
-        JMenu sair = new JMenu("Sair");
+        JMenuItem sairMenuItem = new JMenuItem("Sair");
+
+        sairMenuItem.addActionListener(action -> {
+            this.sair();
+        });
 
         JMenuItem alterarNome = new JMenuItem("Alterar Nome");
         JMenuItem alterarSenha = new JMenuItem("Alterar Senha");
         JMenuItem alterarTipo = new JMenuItem("Alterar Tipo de Usuário");
 
+        alterarNome.addActionListener(action -> {
+            this.alterarNome();
+        });
+
+        alterarSenha.addActionListener(action -> {
+            this.alterarSenha();
+        });
+
+        alterarTipo.addActionListener(action -> {
+            this.alterarTipo();
+        });
+
         setJMenuBar(barra);
 
         barra.add(opcoes);
-        barra.add(sair);
+        barra.add(sairMenuItem);
 
         opcoes.add(alterarNome);
         opcoes.add(alterarSenha);
@@ -60,6 +76,24 @@ public class TelaMusicPlayer extends JFrame implements ActionListener {
 
         // add(panel);
         setVisible(true);
+    }
+
+    public void sair() {
+        controller.fazerLogout();
+        new TelaLogin();
+        dispose();
+    }
+
+    public void alterarNome() {
+
+    }
+
+    public void alterarSenha() {
+
+    }
+
+    public void alterarTipo() {
+        
     }
 
     @Override

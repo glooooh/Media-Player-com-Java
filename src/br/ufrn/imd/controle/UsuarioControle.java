@@ -47,7 +47,7 @@ public class UsuarioControle {
         return usuarioDao.removerUsuario(login, senha);
     }
 
-    public boolean fazerLogin(String login, String senha) {
+    public UsuarioComum fazerLogin(String login, String senha) {
         UsuarioDAO usuarioDao = new UsuarioDAO();
         return usuarioDao.fazerLoginUsuario(login, senha);
     }

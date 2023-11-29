@@ -212,13 +212,13 @@ public class UsuarioDAO {
         return false;
     }
 
-    public boolean fazerLoginUsuario(String login, String senha) {
+    public UsuarioComum fazerLoginUsuario(String login, String senha) {
         for (UsuarioComum usuario : lista_de_usuarios) {
-            if (login.equals(usuario.getLogin())) {
-                return usuario.fazerLogin(senha);
+            if (login.equals(usuario.getLogin()) && usuario.fazerLogin(senha)) {
+                return usuario;
             }
         }
 
-        return false;
+        return null;
     }
 }
