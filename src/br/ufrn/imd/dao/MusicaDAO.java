@@ -19,7 +19,9 @@ public class MusicaDAO {
     }
 
     public void carregarMusicas() {
-        String nomeArquivo = "musicas.txt";
+        String caminhoDir = System.getProperty("user.dir");
+        String separador = System.getProperty("file.separator");
+        String nomeArquivo = caminhoDir + separador + "usuarios.txt";
 
         try {
             File arquivoMusicas = new File(nomeArquivo);
@@ -61,7 +63,9 @@ public class MusicaDAO {
 
         listaMusicas.add(musicaNova);
 
-        String nomeArquivo = "musicas.txt";
+        String caminho = System.getProperty("user.dir");
+        String separador = System.getProperty("file.separator");
+        String nomeArquivo = caminho + separador + "usuarios.txt";
 
         try {
             File arquivoMusicas = new File(nomeArquivo);
@@ -70,7 +74,7 @@ public class MusicaDAO {
             }
 
             FileWriter fw = new FileWriter(arquivoMusicas.getAbsoluteFile(), true); // true para adicionar no final do
-                                                                                     // arquivo
+                                                                                    // arquivo
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Texto a ser escrito no arquivo
@@ -104,11 +108,13 @@ public class MusicaDAO {
 
     public boolean editarMusica(Musica musicaEditada, String novoAtributo, String tipoAtributo) {
         for (Musica musica : listaMusicas) {
-            if ((musicaEditada.getNome()).equals(musica.getNome()) && (musicaEditada.getArtista()).equals(musica.getArtista())) {
-                String caminho = System.getProperty("user.dir");
+            if ((musicaEditada.getNome()).equals(musica.getNome())
+                    && (musicaEditada.getArtista()).equals(musica.getArtista())) {
+                String caminhoDir = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
+                String nomeArquivo = caminhoDir + separador + "usuarios.txt";
 
-                File arquivoMusicas = new File(caminho + separador + "musicas.txt");
+                File arquivoMusicas = new File(nomeArquivo);
 
                 try {
                     FileReader fr = new FileReader(arquivoMusicas);
@@ -119,7 +125,8 @@ public class MusicaDAO {
 
                     while (linha != null) {
                         // Falha de segurança
-                        if (linha.indexOf(musicaEditada.getNome()) >= 0 && linha.indexOf(musicaEditada.getArtista()) >= 0) {
+                        if (linha.indexOf(musicaEditada.getNome()) >= 0
+                                && linha.indexOf(musicaEditada.getArtista()) >= 0) {
                             if (tipoAtributo.equals("N")) {
                                 linha = novoAtributo + " — " + musica.getArtista() + " — " + musica.getCaminho();
                             } else if (tipoAtributo.equals("A")) {
@@ -162,11 +169,13 @@ public class MusicaDAO {
     /* TESTAR, VAI DAR ERRADO */
     public boolean removerMusica(Musica musicaRemovida) {
         for (Musica musica : listaMusicas) {
-            if ((musicaRemovida.getNome()).equals(musica.getNome()) && (musicaRemovida.getArtista()).equals(musica.getArtista())) {
-                String caminho = System.getProperty("user.dir");
+            if ((musicaRemovida.getNome()).equals(musica.getNome())
+                    && (musicaRemovida.getArtista()).equals(musica.getArtista())) {
+                String caminhoDir = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
+                String nomeArquivo = caminhoDir + separador + "usuarios.txt";
 
-                File arquivoUsuarios = new File(caminho + separador + "usuarios.txt");
+                File arquivoUsuarios = new File(nomeArquivo);
 
                 try {
                     FileReader fr = new FileReader(arquivoUsuarios);
@@ -177,7 +186,8 @@ public class MusicaDAO {
 
                     while (linha != null) {
                         // Falha de segurança
-                        if (linha.indexOf(musicaRemovida.getNome()) == 0 || linha.indexOf(musicaRemovida.getArtista()) == 0) {
+                        if (linha.indexOf(musicaRemovida.getNome()) == 0
+                                || linha.indexOf(musicaRemovida.getArtista()) == 0) {
                             salvarLinhas.add(linha);
                         }
                     }
