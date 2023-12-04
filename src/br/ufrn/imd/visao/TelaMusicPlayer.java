@@ -1,20 +1,16 @@
 package br.ufrn.imd.visao;
 
 import javax.swing.BoxLayout;
-//import javax.swing.JButton;
-
-// import br.ufrn.imd.modelo.Diretorio;
 
 import javax.swing.JFrame;
-//import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-//import javax.swing.JPasswordField;
-//import javax.swing.JTextField;
 
 import br.ufrn.imd.controle.GerenciadorControle;
+import br.ufrn.imd.modelo.UsuarioComum;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +18,9 @@ import java.awt.event.ActionListener;
 public class TelaMusicPlayer extends JFrame implements ActionListener {
     private GerenciadorControle controller;
 
-    public TelaMusicPlayer() {
+    public TelaMusicPlayer(UsuarioComum usuario) {
         controller = new GerenciadorControle();
+        controller.setUsuarioLogado(usuario);
 
         setTitle("Music Player");
         setSize(800, 400);
@@ -72,9 +69,6 @@ public class TelaMusicPlayer extends JFrame implements ActionListener {
 
         });
 
-        // panel.add(loginLabel);
-
-        // add(panel);
         setVisible(true);
     }
 
@@ -85,7 +79,13 @@ public class TelaMusicPlayer extends JFrame implements ActionListener {
     }
 
     public void alterarNome() {
-
+        String novoNome = JOptionPane.showInputDialog(this, "Digite o novo nome:");
+        
+        if (novoNome != null) {
+            controller.editarUsuario(novoNome, "N");
+            // Exemplo: controller.alterarNome(novoNome);
+            JOptionPane.showMessageDialog(this, "Nome alterado com sucesso para: " + novoNome);
+        }
     }
 
     public void alterarSenha() {

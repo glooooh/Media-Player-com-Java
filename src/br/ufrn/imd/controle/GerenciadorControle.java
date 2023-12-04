@@ -1,7 +1,6 @@
 package br.ufrn.imd.controle;
 
 import br.ufrn.imd.modelo.UsuarioComum;
-import br.ufrn.imd.dao.UsuarioDAO;
 import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.modelo.Playlist;
 
@@ -43,6 +42,8 @@ public class GerenciadorControle {
     public boolean fazerLogin(String login, String senha) {
         UsuarioControle usuario_controle = new UsuarioControle();
         this.usuarioLogado = usuario_controle.fazerLogin(login, senha);
+
+        System.out.println(usuarioLogado.getLogin());
 
         if (this.usuarioLogado == null) {
             return false;

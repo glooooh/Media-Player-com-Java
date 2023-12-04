@@ -204,7 +204,7 @@ public class UsuarioDAO {
                     writer.close();
                     return true;
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    System.out.println("Caiu no try catch");
                 }
             }
         }
