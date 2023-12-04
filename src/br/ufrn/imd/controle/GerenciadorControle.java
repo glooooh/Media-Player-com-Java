@@ -1,6 +1,7 @@
 package br.ufrn.imd.controle;
 
 import br.ufrn.imd.modelo.UsuarioComum;
+import br.ufrn.imd.dao.UsuarioDAO;
 import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.modelo.Playlist;
 
@@ -26,6 +27,10 @@ public class GerenciadorControle {
     public UsuarioComum getUsuarioLogado() {
         return usuarioLogado;
     }
+    
+    public void setUsuarioLogado(UsuarioComum usuario) {
+    	this.usuarioLogado = usuario;
+    }
 
     public void setMusicaTocando(Musica musicaTocando) {
         this.musicaTocando = musicaTocando;
@@ -49,5 +54,10 @@ public class GerenciadorControle {
     public boolean fazerLogout() {
         this.usuarioLogado = null;
         return true;
+    }
+    
+    public boolean editarUsuario(String atributoNovo, String tipoAtributo) {
+    	UsuarioControle usuario_controle = new UsuarioControle();
+    	return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), atributoNovo, tipoAtributo);
     }
 }
