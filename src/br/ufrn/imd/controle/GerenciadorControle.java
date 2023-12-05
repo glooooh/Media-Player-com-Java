@@ -1,6 +1,7 @@
 package br.ufrn.imd.controle;
 
 import br.ufrn.imd.modelo.UsuarioComum;
+import br.ufrn.imd.modelo.UsuarioVIP;
 import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.modelo.Playlist;
 
@@ -26,9 +27,9 @@ public class GerenciadorControle {
     public UsuarioComum getUsuarioLogado() {
         return usuarioLogado;
     }
-    
+
     public void setUsuarioLogado(UsuarioComum usuario) {
-    	this.usuarioLogado = usuario;
+        this.usuarioLogado = usuario;
     }
 
     public void setMusicaTocando(Musica musicaTocando) {
@@ -48,7 +49,7 @@ public class GerenciadorControle {
         if (this.usuarioLogado == null) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -56,9 +57,22 @@ public class GerenciadorControle {
         this.usuarioLogado = null;
         return true;
     }
-    
+
+    public boolean editarAssinatura() {
+        UsuarioControle usuario_controle = new UsuarioControle();
+        if (this.usuarioLogado.ehVIP()) {
+            usuarioLogado = new UsuarioComum(this.usuarioLogado.getNome(), this.usuarioLogado.getLogin(),
+                    this.usuarioLogado.getSenha());
+            return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), "C", "T");
+        } else {
+            usuarioLogado = new UsuarioVIP(this.usuarioLogado.getNome(), this.usuarioLogado.getLogin(),
+                    this.usuarioLogado.getSenha());
+            return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), "V", "T");
+        }
+    }
+
     public boolean editarUsuario(String atributoNovo, String tipoAtributo) {
-    	UsuarioControle usuario_controle = new UsuarioControle();
-    	return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), atributoNovo, tipoAtributo);
+        UsuarioControle usuario_controle = new UsuarioControle();
+        return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), atributoNovo, tipoAtributo);
     }
 }

@@ -168,8 +168,9 @@ public class UsuarioDAO {
                     String tipo = usuario.ehVIP() ? "V" : "C";
 
                     while (linha != null) {
-                        // Falha de segurança
-                        if (linha.indexOf(login) >= 0) {
+                        String palavras[] = linha.split(" ");
+
+                        if (palavras[0].equals(login)) {
                             if (tipoAtributo.equals("N")) {
                                 linha = usuario.getLogin() + " " + usuario.getSenha() + " " + atributoNovo + " "
                                         + tipo;
@@ -184,6 +185,7 @@ public class UsuarioDAO {
                         } else {
                             salvarLinhas.add(linha);
                         }
+                        linha = reader.readLine();
                     }
 
                     reader.close();
@@ -200,11 +202,11 @@ public class UsuarioDAO {
                         writer.newLine();
                     }
 
-                    fw.close();
                     writer.close();
+                    fw.close();
                     return true;
                 } catch (Exception e) {
-                    System.out.println("Caiu no try catch");
+                    e.printStackTrace();
                 }
             }
         }
