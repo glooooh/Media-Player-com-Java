@@ -1,5 +1,15 @@
 package br.ufrn.imd.visao;
 
+import br.ufrn.imd.controle.GerenciadorControle;
+import br.ufrn.imd.modelo.UsuarioComum;
+
+import javafx.scene.media.MediaPlayer;
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -13,10 +23,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import br.ufrn.imd.controle.GerenciadorControle;
-import br.ufrn.imd.modelo.UsuarioComum;
-import javafx.stage.FileChooser;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -143,34 +149,69 @@ public class TelaMusicPlayer extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Assinatura alterada com sucesso.");
         }
     }
-
+    
     private void adicionarMusica(ActionEvent ActionEvente) {
-        JFileChooser selecionarMusica = new JFileChooser();
+    	FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos MP3", "*.mp3"));
 
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Apenas .mp3", "mp3");
-        selecionarMusica.setAcceptAllFileFilterUsed(false);
-        selecionarMusica.setFileFilter(filtro);
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            Media media = new Media(selectedFile.toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-        int respostaDoFileChooser = selecionarMusica.showOpenDialog(null);
+            mediaPlayer.setOnReady(() -> {
+                System.out.println("Tocando música: " + selectedFile.getName());
+                mediaPlayer.play();
+            });
 
-        if (respostaDoFileChooser == selecionarMusica.APPROVE_OPTION) {
-            File arquivoMusica = selecionarMusica.getSelectedFile();
-            System.out.println("CAMINHO DO ARQUIVO ABERTO = " + arquivoMusica.getAbsolutePath());
-            try {
-
-                new Player(new BufferedInputStream(new FileInputStream(arquivoMusica.getAbsolutePath()))).play();
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-            JLayer musica = new JLayer<>();
+            mediaPlayer.setOnEndOfMedia(() -> {
+                System.out.println("Fim da música: " + selectedFile.getName());
+                mediaPlayer.stop();
+            });
         } else {
-            System.out.println("Nenhum arquivo Selecionado");
+            System.out.println("Nenhum arquivo selecionado.");
         }
     }
 
-    private void adicionarDiretorio(ActionEvent ActionEvente) {
+//    private void adicionarMusica(ActionEvent ActionEvente) {
+//        JFileChooser selecionarMusica = new JFileChooser();
+//
+//        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Apenas .mp3", "mp3");
+//        selecionarMusica.setAcceptAllFileFilterUsed(false);
+//        selecionarMusica.setFileFilter(filtro);
+//
+//        int respostaDoFileChooser = selecionarMusica.showOpenDialog(null);
+//
+//        if (respostaDoFileChooser == selecionarMusica.APPROVE_OPTION) {
+//            File arquivoMusica = selecionarMusica.getSelectedFile();
+//            System.out.println("CAMINHO DO ARQUIVO ABERTO = " + arquivoMusica.getAbsolutePath());
+//            try {
+//
+//                new Player(new BufferedInputStream(new FileInputStream(arquivoMusica.getAbsolutePath()))).play();
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//            }
+//            JLayer musica = new JLayer<>();
+//        } else {
+//            System.out.println("Nenhum arquivo Selecionado");
+//        }
+//    }
 
+    private void adicionarDiretorio(ActionEvent ActionEvente) {
+        JFileChooser selecionarDiretorio = new JFileChooser();
+        selecionarDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int respostaDoFileChooser = selecionarDiretorio.showOpenDialog(null);
+
+        if (respostaDoFileChooser == JFileChooser.APPROVE_OPTION) {
+            File diretorioSelecionado = selecionarDiretorio.getSelectedFile();
+            System.out.println("DIRETÓRIO SELECIONADO = " + diretorioSelecionado.getAbsolutePath());
+            // Faça algo com o diretório selecionado, como listar arquivos ou realizar operações nele
+        } else {
+            System.out.println("Nenhum diretório selecionado");
+        }
     }
+
 
     private void adicionarPlaylist(ActionEvent ActionEvente) {
 
