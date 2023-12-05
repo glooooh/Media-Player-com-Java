@@ -1,8 +1,8 @@
-package br.ufrn.imd.controle;
+package application.br.ufrn.imd.controle;
 
-import br.ufrn.imd.dao.DiretorioDAO;
+import application.br.ufrn.imd.dao.DiretorioDAO;
 
-import br.ufrn.imd.modelo.Diretorio;
+import application.br.ufrn.imd.modelo.Diretorio;
 
 import java.util.ArrayList;
 

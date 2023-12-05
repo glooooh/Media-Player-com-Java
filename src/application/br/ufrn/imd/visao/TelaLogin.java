@@ -1,87 +1,81 @@
-package br.ufrn.imd.visao;
+package application.br.ufrn.imd.visao;
 
-import br.ufrn.imd.controle.GerenciadorControle;
+import application.br.ufrn.imd.controle.GerenciadorControle;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Dimension;
+public class TelaLogin extends Application {
 
-public class TelaLogin extends JFrame implements ActionListener {
     private GerenciadorControle controller;
 
-    public TelaLogin() {
+    @Override
+    public void start(Stage primaryStage) {
         controller = new GerenciadorControle();
 
-        setTitle("Music Player");
-        setSize(800, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-        setLocationRelativeTo(null);
+        primaryStage.setTitle("Music Player");
+        primaryStage.setResizable(false);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        VBox root = new VBox(10);
+        root.setPrefSize(800, 400);
 
-        JLabel loginLabel = new JLabel("Login:");
-        JTextField loginCampo = new JTextField(10);
-        loginCampo.setMaximumSize(new Dimension(350, 20));
+        Label loginLabel = new Label("Login:");
+        TextField loginCampo = new TextField();
+        loginCampo.setMaxWidth(350);
 
-        JLabel senhaLabel = new JLabel("Senha:");
-        JPasswordField senhaCampo = new JPasswordField(15);
-        senhaCampo.setMaximumSize(new Dimension(350, 20));
+        Label senhaLabel = new Label("Senha:");
+        PasswordField senhaCampo = new PasswordField();
+        senhaCampo.setMaxWidth(350);
 
-        JButton loginBtn = new JButton("Login");
-        loginBtn.setForeground(new Color(237, 241, 238));
-        loginBtn.setBackground(new Color(9, 10, 9));
+        Button loginBtn = new Button("Login");
+        loginBtn.setStyle("-fx-text-fill: white; -fx-background-color: #090a09;");
 
-        JButton cadastrarBtn = new JButton("Cadastre-se!");
-        cadastrarBtn.setForeground(new Color(237, 241, 238));
-        cadastrarBtn.setBackground(new Color(9, 10, 9));
+        Button cadastrarBtn = new Button("Cadastre-se!");
+        cadastrarBtn.setStyle("-fx-text-fill: white; -fx-background-color: #090a09;");
 
-        loginBtn.addActionListener(action -> {
-            this.logar(action, loginCampo, senhaCampo);
-        });
+        loginBtn.setOnAction(event -> logar(primaryStage, loginCampo.getText(), senhaCampo.getText()));
+        cadastrarBtn.setOnAction(event -> cadastrar(primaryStage));
 
-        cadastrarBtn.addActionListener(action -> {
-            this.cadastrar(action);
-        });
+        root.getChildren().addAll(loginLabel, loginCampo, senhaLabel, senhaCampo, loginBtn, cadastrarBtn);
 
-        panel.add(loginLabel);
-        panel.add(loginCampo);
-        panel.add(senhaLabel);
-        panel.add(senhaCampo);
-        panel.add(loginBtn);
-        panel.add(cadastrarBtn);
-
-        add(panel);
-        setVisible(true);
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-    private void logar(ActionEvent ActionEvente, JTextField loginCampo, JTextField senhaCampo) {
-        if (controller.fazerLogin(loginCampo.getText(), senhaCampo.getText())) {
-            new TelaMusicPlayer(controller.getUsuarioLogado());
-            dispose();
+    private void logar(Stage primaryStage, String login, String senha) {
+        if (controller.fazerLogin(login, senha)) {
+            TelaMusicPlayer telaMusicPlayer = new TelaMusicPlayer(controller.getUsuarioLogado());
+            telaMusicPlayer.start(new Stage());
+            primaryStage.close();
         } else {
-            JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos", "Titulo", JOptionPane.ERROR_MESSAGE);
+            // Exibe uma caixa de diálogo com a mensagem de erro
+            exibirAlerta("Usuário ou senha incorretos!");
         }
     }
 
-    private void cadastrar(ActionEvent ActionEvente) {
-        new TelaRegistro();
-        dispose();
+    private void cadastrar(Stage primaryStage) {
+        TelaRegistro telaRegistro = new TelaRegistro();
+        telaRegistro.start(new Stage());
+        primaryStage.close();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void exibirAlerta(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

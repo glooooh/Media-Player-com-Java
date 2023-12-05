@@ -1,4 +1,6 @@
-package br.ufrn.imd.dao;
+package application.br.ufrn.imd.dao;
+
+import application.br.ufrn.imd.modelo.Diretorio;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -7,8 +9,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import br.ufrn.imd.modelo.Diretorio;
 
 public class DiretorioDAO {
     private ArrayList<Diretorio> diretorios;

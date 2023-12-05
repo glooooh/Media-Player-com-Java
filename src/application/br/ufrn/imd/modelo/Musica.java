@@ -1,4 +1,4 @@
-package br.ufrn.imd.modelo;
+package application.br.ufrn.imd.modelo;
 
 public class Musica {
     private String nome;

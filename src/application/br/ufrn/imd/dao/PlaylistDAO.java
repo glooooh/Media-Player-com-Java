@@ -1,4 +1,8 @@
-package br.ufrn.imd.dao;
+package application.br.ufrn.imd.dao;
+
+import application.br.ufrn.imd.modelo.Musica;
+import application.br.ufrn.imd.modelo.Playlist;
+import application.br.ufrn.imd.modelo.UsuarioVIP;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -7,10 +11,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import br.ufrn.imd.modelo.Musica;
-import br.ufrn.imd.modelo.Playlist;
-import br.ufrn.imd.modelo.UsuarioVIP;
 
 public class PlaylistDAO {
     ArrayList<Playlist> playlistsUsuario;

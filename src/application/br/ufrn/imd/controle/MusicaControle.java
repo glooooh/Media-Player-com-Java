@@ -1,9 +1,9 @@
-package br.ufrn.imd.controle;
+package application.br.ufrn.imd.controle;
 
 import java.util.ArrayList;
 
-import br.ufrn.imd.dao.MusicaDAO;
-import br.ufrn.imd.modelo.Musica;
+import application.br.ufrn.imd.dao.MusicaDAO;
+import application.br.ufrn.imd.modelo.Musica;
 
 public class MusicaControle {
     public MusicaControle() {
