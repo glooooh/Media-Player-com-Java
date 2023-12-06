@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.FXCollections?> <!-- Adicionando a importação correta -->
 
 <AnchorPane prefHeight="348.0" prefWidth="422.0"
 	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
@@ -21,15 +22,8 @@
 		<Label layoutX="136.0" layoutY="157.0" text="Senha" />
 		<PasswordField fx:id="campoSenha" layoutX="136.0" layoutY="174.0"
 			maxWidth="350.0" />
-		<ChoiceBox layoutX="136.0" layoutY="212.0" prefWidth="150.0">
-			<items>
-				<FXCollections fx:factory="observableArrayList">
-					<String fx:value="Comum" />
-					<String fx:value="VIP" />
-				</FXCollections>
-			</items>
+		<ChoiceBox fx:id="choiceBox" layoutX="136.0" layoutY="212.0" prefWidth="150">
 		</ChoiceBox>
-
 		<ToolBar layoutX="140.0" layoutY="250.0" prefHeight="40.0"
 			prefWidth="143.0">
 			<items>

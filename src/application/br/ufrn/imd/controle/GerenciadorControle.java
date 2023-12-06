@@ -1,7 +1,9 @@
 package application.br.ufrn.imd.controle;
 
 import application.br.ufrn.imd.modelo.UsuarioComum;
-import application.br.ufrn.imd.modelo.UsuarioVIP;
+
+import java.util.ArrayList;
+
 import application.br.ufrn.imd.modelo.Musica;
 import application.br.ufrn.imd.modelo.Playlist;
 
@@ -9,11 +11,17 @@ public class GerenciadorControle {
     private UsuarioComum usuarioLogado;
     private Playlist playlistSelecionada;
     private Musica musicaTocando;
+    private ArrayList<Musica> listaMusicas;
 
     public GerenciadorControle() {
         this.usuarioLogado = null;
         this.playlistSelecionada = null;
         this.musicaTocando = null;
+        this.listaMusicas = new ArrayList<Musica>();
+    }
+
+    public ArrayList<Musica> getListaMusicas() {
+        return listaMusicas;
     }
 
     public Musica getMusicaTocando() {
@@ -40,11 +48,13 @@ public class GerenciadorControle {
         this.playlistSelecionada = playlistSelecionada;
     }
 
+    public void setListaMusicas(ArrayList<Musica> listaMusicas) {
+        this.listaMusicas = listaMusicas;
+    }
+
     public boolean fazerLogin(String login, String senha) {
         UsuarioControle usuario_controle = new UsuarioControle();
         this.usuarioLogado = usuario_controle.fazerLogin(login, senha);
-
-        System.out.println(usuarioLogado.getLogin());
 
         if (this.usuarioLogado == null) {
             return false;
@@ -58,21 +68,26 @@ public class GerenciadorControle {
         return true;
     }
 
-    public boolean editarAssinatura() {
-        UsuarioControle usuario_controle = new UsuarioControle();
-        if (this.usuarioLogado.ehVIP()) {
-            usuarioLogado = new UsuarioComum(this.usuarioLogado.getNome(), this.usuarioLogado.getLogin(),
-                    this.usuarioLogado.getSenha());
-            return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), "C", "T");
-        } else {
-            usuarioLogado = new UsuarioVIP(this.usuarioLogado.getNome(), this.usuarioLogado.getLogin(),
-                    this.usuarioLogado.getSenha());
-            return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), "V", "T");
-        }
-    }
+    // public boolean editarAssinatura() {
+    // UsuarioControle usuario_controle = new UsuarioControle();
+    // if (this.usuarioLogado.ehVIP()) {
+    // usuarioLogado = new UsuarioComum(this.usuarioLogado.getNome(),
+    // this.usuarioLogado.getLogin(),
+    // this.usuarioLogado.getSenha());
+    // return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), "C",
+    // "T");
+    // } else {
+    // usuarioLogado = new UsuarioVIP(this.usuarioLogado.getNome(),
+    // this.usuarioLogado.getLogin(),
+    // this.usuarioLogado.getSenha());
+    // return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), "V",
+    // "T");
+    // }
+    // }
 
-    public boolean editarUsuario(String atributoNovo, String tipoAtributo) {
-        UsuarioControle usuario_controle = new UsuarioControle();
-        return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(), atributoNovo, tipoAtributo);
-    }
+    // public boolean editarUsuario(String atributoNovo, String tipoAtributo) {
+    // UsuarioControle usuario_controle = new UsuarioControle();
+    // return usuario_controle.editarUsuario(this.usuarioLogado.getLogin(),
+    // atributoNovo, tipoAtributo);
+    // }
 }
