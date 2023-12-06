@@ -1,7 +1,4 @@
-package application.br.ufrn.imd.dao;
-
-import application.br.ufrn.imd.modelo.UsuarioComum;
-import application.br.ufrn.imd.modelo.UsuarioVIP;
+package br.ufrn.imd.dao;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,6 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import br.ufrn.imd.modelo.UsuarioComum;
+import br.ufrn.imd.modelo.UsuarioVIP;
 
 public class UsuarioDAO {
     private ArrayList<UsuarioComum> lista_de_usuarios;

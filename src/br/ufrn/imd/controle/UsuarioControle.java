@@ -1,12 +1,12 @@
-package application.br.ufrn.imd.controle;
+package br.ufrn.imd.controle;
 
 import java.util.ArrayList;
 
-import application.br.ufrn.imd.dao.UsuarioDAO;
-import application.br.ufrn.imd.modelo.Musica;
-import application.br.ufrn.imd.modelo.Playlist;
-import application.br.ufrn.imd.modelo.UsuarioComum;
-import application.br.ufrn.imd.modelo.UsuarioVIP;
+import br.ufrn.imd.dao.UsuarioDAO;
+import br.ufrn.imd.modelo.Musica;
+import br.ufrn.imd.modelo.Playlist;
+import br.ufrn.imd.modelo.UsuarioComum;
+import br.ufrn.imd.modelo.UsuarioVIP;
 
 /*
  * A ideia dele é a seguinte, no arquivo de controller (no seu caso, o

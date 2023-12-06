@@ -1,9 +1,9 @@
-package application.br.ufrn.imd.controle;
+package br.ufrn.imd.controle;
 
-import application.br.ufrn.imd.modelo.UsuarioComum;
-import application.br.ufrn.imd.modelo.UsuarioVIP;
-import application.br.ufrn.imd.modelo.Musica;
-import application.br.ufrn.imd.modelo.Playlist;
+import br.ufrn.imd.modelo.UsuarioComum;
+import br.ufrn.imd.modelo.UsuarioVIP;
+import br.ufrn.imd.modelo.Musica;
+import br.ufrn.imd.modelo.Playlist;
 
 public class GerenciadorControle {
     private UsuarioComum usuarioLogado;

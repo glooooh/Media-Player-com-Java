@@ -1,7 +1,6 @@
 package application.br.ufrn.imd.visao;
 
 import application.br.ufrn.imd.controle.GerenciadorControle;
-import application.br.ufrn.imd.controle.UsuarioControle;
 import application.br.ufrn.imd.modelo.UsuarioComum;
 
 import javafx.application.Application;
@@ -12,7 +11,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.Optional;
 
 public class TelaMusicPlayer extends Application {
 
@@ -60,8 +58,7 @@ public class TelaMusicPlayer extends Application {
         opcoes.getItems().addAll(alterarNome, alterarSenha, alterarTipo);
         barra.getMenus().addAll(opcoes);
 
-        panel.getChildren().addAll(barra, listaMusicasPlaylist, listaDiretorio, listaPlaylist, adicionarMusica,
-                adicionarDirectory, adicionarPlaylist);
+        panel.getChildren().addAll(barra, listaMusicasPlaylist, listaDiretorio, listaPlaylist, adicionarMusica, adicionarDirectory, adicionarPlaylist);
 
         Scene scene = new Scene(panel, 800, 400);
         primaryStage.setScene(scene);
@@ -75,40 +72,41 @@ public class TelaMusicPlayer extends Application {
     }
 
     private void alterarNome(Stage primaryStage) {
-        TextInputDialog dialog = new TextInputDialog();
+    	TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Alterar Nome");
         dialog.setHeaderText(null);
         dialog.setContentText("Digite o novo nome:");
 
         dialog.showAndWait().ifPresent(novoNome -> {
-            UsuarioControle usuario_controle = new UsuarioControle();
-            usuario_controle.editarUsuario(this.controller.getUsuarioLogado(), novoNome, "N");
+            controller.editarUsuario(novoNome, "N");
             exibirAlerta("Sucesso", "Nome alterado com sucesso para: " + novoNome, Alert.AlertType.INFORMATION);
         });
     }
 
     private void alterarSenha(Stage primaryStage) {
-        TextInputDialog dialog = new TextInputDialog();
+    	TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Alterar Senha");
         dialog.setHeaderText(null);
         dialog.setContentText("Digite a nova senha:");
 
         dialog.showAndWait().ifPresent(novaSenha -> {
-            UsuarioControle usuario_controle = new UsuarioControle();
-            usuario_controle.editarUsuario(this.controller.getUsuarioLogado(), novaSenha, "S");
+            controller.editarUsuario(novaSenha, "S");
             exibirAlerta("Sucesso", "Senha alterada com sucesso.", Alert.AlertType.INFORMATION);
         });
     }
 
     private void alterarTipo(Stage primaryStage) {
-        Optional<ButtonType> resultado = exibirAlerta("Assinatura", "Você deseja mudar a assinatura?",
-                Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Assinatura");
+        alert.setHeaderText(null);
+        alert.setContentText("Você deseja mudar a assinatura?");
 
-        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-            UsuarioControle usuario_controle = new UsuarioControle();
-            usuario_controle.editarAssinatura(this.controller.getUsuarioLogado());
-            exibirAlerta("Sucesso", "Assinatura alterada com sucesso.", Alert.AlertType.INFORMATION);
-        }
+        alert.showAndWait().ifPresent(resposta -> {
+            if (resposta == ButtonType.OK) {
+                controller.editarAssinatura();
+                exibirAlerta("Sucesso", "Assinatura alterada com sucesso.", Alert.AlertType.INFORMATION);
+            }
+        });
     }
 
     private void adicionarMusica(Stage primaryStage) {
@@ -132,11 +130,11 @@ public class TelaMusicPlayer extends Application {
         // Lógica para adicionar playlist
     }
 
-    private Optional<ButtonType> exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
+    private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
-        return alert.showAndWait();
+        alert.showAndWait();
     }
 }
