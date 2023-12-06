@@ -33,7 +33,7 @@ public class PlaylistDAO {
                 }
 
                 String nomePlaylist = file.getName();
-                nomePlaylist = nomePlaylist.replace("playlist_", "");
+                nomePlaylist = nomePlaylist.replace("playlist_", "").replace(".txt", "");
 
                 FileReader fr = new FileReader(file);
                 BufferedReader br = new BufferedReader(fr);
@@ -46,15 +46,14 @@ public class PlaylistDAO {
                 if (usuario.getLogin().equals(loginArquivo) && usuario.getNome().equals(nomeUsuarioArquivo)) {
                     Playlist playlistNova = new Playlist(nomePlaylist, usuario);
                     while ((linha = br.readLine()) != null) {
-                        // Supondo que o formato do arquivo seja "nome — artista — caminho"
-                        String[] dadosMusica = linha.split(" — ");
+                        // Supondo que o formato do arquivo seja "nome — caminho"
+                        String[] dadosMusica = linha.split(" - ");
 
-                        if (dadosMusica.length == 3) {
+                        if (dadosMusica.length == 2) {
                             String nome = dadosMusica[0];
-                            String artista = dadosMusica[1];
-                            String caminho = dadosMusica[2];
+                            String caminho = dadosMusica[1];
 
-                            Musica musica = new Musica(nome, artista, caminho);
+                            Musica musica = new Musica(nome, caminho);
                             playlistNova.adicionarMusica(musica);
                         }
                     }
@@ -73,7 +72,8 @@ public class PlaylistDAO {
     public boolean cadastrarPlaylist(Playlist playlist) {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
-        File arquivo = new File(caminho + separador + "Playlists" + separador + "playlist_" + playlist.getNome());
+        File arquivo = new File(
+                caminho + separador + "Playlists" + separador + "playlist_" + playlist.getNome() + ".txt");
         try {
             arquivo.createNewFile();
             FileWriter fw = new FileWriter(arquivo.getAbsoluteFile(), true); // true para adicionar no final do
@@ -90,7 +90,7 @@ public class PlaylistDAO {
             // Fechar o BufferedWriter
             bw.close();
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -100,10 +100,10 @@ public class PlaylistDAO {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
         File arquivoPlaylist = new File(
-                caminho + separador + "Playlists" + separador + "playlist_" + playlist.getNome());
+                caminho + separador + "Playlists" + separador + "playlist_" + playlist.getNome() + ".txt");
 
         for (Musica musica : playlist.getMusicas()) {
-            if (musicaNova.getNome().equals(musica.getNome()) && musicaNova.getArtista().equals(musica.getArtista())) {
+            if (musicaNova.getNome().equals(musica.getNome()) && musicaNova.getCaminho().equals(musica.getCaminho())) {
                 return false;
             }
         }
@@ -120,7 +120,7 @@ public class PlaylistDAO {
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Texto a ser escrito no arquivo
-            String texto = musicaNova.getNome() + " — " + musicaNova.getArtista() + " — " + musicaNova.getCaminho();
+            String texto = musicaNova.getNome() + " - " + musicaNova.getCaminho();
 
             // Escrever no arquivo
             bw.write(texto);
@@ -148,7 +148,7 @@ public class PlaylistDAO {
             ArrayList<String> salvarLinhas = new ArrayList<>();
 
             while (linha != null) {
-                if (linha.indexOf(musicaRemovida.getNome()) == 0 || linha.indexOf(musicaRemovida.getArtista()) == 0) {
+                if (linha.indexOf(musicaRemovida.getNome()) == 0 || linha.indexOf(musicaRemovida.getCaminho()) == 0) {
                     salvarLinhas.add(linha);
                 }
             }

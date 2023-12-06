@@ -145,7 +145,7 @@ public class UsuarioDAO {
                     writer.close();
                     return true;
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    e.printStackTrace();
                 }
             }
         }

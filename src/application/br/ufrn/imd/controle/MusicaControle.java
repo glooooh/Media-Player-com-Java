@@ -10,8 +10,8 @@ public class MusicaControle {
 
     }
 
-    public boolean cadastrarMusicasNoBanco(String nome, String artista, String caminho) {
-        Musica musica = new Musica(nome, artista, caminho);
+    public boolean cadastrarMusicasNoBanco(String nome, String caminho) {
+        Musica musica = new Musica(nome, caminho);
         MusicaDAO musicaDao = new MusicaDAO();
         return musicaDao.cadastrarMusica(musica);
     }
@@ -21,14 +21,14 @@ public class MusicaControle {
         return musicaDao.exibirMusicas();
     }
 
-    public Musica buscarMusicaNoBanco(String nome, String artista) {
+    public Musica buscarMusicaNoBanco(String nome, String caminho) {
         MusicaDAO musicaDao = new MusicaDAO();
-        Musica musica = musicaDao.buscarMusica(nome, artista);
+        Musica musica = musicaDao.buscarMusica(nome, caminho);
         return musica;
     }
 
-    public boolean editarMusicasNoBanco(String nome, String artista, String novoAtributo, String tipoAtributo) {
-        Musica musica = buscarMusicaNoBanco(nome, artista);
+    public boolean editarMusicasNoBanco(String nome, String caminho ,String novoAtributo, String tipoAtributo) {
+        Musica musica = buscarMusicaNoBanco(nome, caminho);
 
         if (musica == null) {
             return false;
@@ -38,8 +38,8 @@ public class MusicaControle {
         return musicaDao.editarMusica(musica, novoAtributo, tipoAtributo);
     }
 
-    public boolean removerMusicasDoBanco(String nome, String artista) {
-        Musica musica = buscarMusicaNoBanco(nome, artista);
+    public boolean removerMusicasDoBanco(String nome, String caminho) {
+        Musica musica = buscarMusicaNoBanco(nome, caminho);
 
         if (musica == null) {
             return false;

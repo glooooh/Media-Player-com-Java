@@ -3,13 +3,21 @@ package application.br.ufrn.imd.controle;
 import application.br.ufrn.imd.dao.DiretorioDAO;
 
 import application.br.ufrn.imd.modelo.Diretorio;
+import application.br.ufrn.imd.modelo.Musica;
 
 import java.util.ArrayList;
 
 public class DiretorioControle {
-     public boolean cadastrarDiretorioNoBanco(String caminho) {
+    public boolean cadastrarDiretorioNoBanco(String caminho) {
         DiretorioDAO diretorioDao = new DiretorioDAO();
         Diretorio diretorioNovo = new Diretorio(caminho);
+
+        MusicaControle novasMusica = new MusicaControle();
+
+        for (Musica musica : diretorioNovo.getMusicas()) {
+            novasMusica.cadastrarMusicasNoBanco(musica.getNome(),
+                    musica.getCaminho());
+        }
 
         return diretorioDao.cadastrarDiretorio(diretorioNovo);
     }
@@ -37,5 +45,6 @@ public class DiretorioControle {
         return diretorioDao.removerDiretorio(diretorioRemover);
     }
 
-    // Ia implementar o adicionar musicas ao diretorio mas não sei se fica aqui mesmo
+    // Ia implementar o adicionar musicas ao diretorio mas não sei se fica aqui
+    // mesmo
 }

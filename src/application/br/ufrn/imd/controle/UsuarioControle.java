@@ -71,17 +71,17 @@ public class UsuarioControle {
         return playlist_controle.listarPlaylist();
     }
 
-    public boolean adicionarMusica(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeMusica, String artista) {
+    public boolean adicionarMusica(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeMusica, String caminho) {
         PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
         MusicaControle musica_controle = new MusicaControle();
-        Musica musica = musica_controle.buscarMusicaNoBanco(nomeMusica, artista);
+        Musica musica = musica_controle.buscarMusicaNoBanco(nomeMusica, caminho);
         return playlist_controle.adicionarMusica(nomePlaylist, musica);
     }
 
-    public boolean removerMusica(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeMusica, String artista) {
+    public boolean removerMusica(UsuarioVIP usuarioLogado, String nomePlaylist, String nomeMusica, String caminho) {
         PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
         MusicaControle musica_controle = new MusicaControle();
-        Musica musica = musica_controle.buscarMusicaNoBanco(nomeMusica, artista);
+        Musica musica = musica_controle.buscarMusicaNoBanco(nomeMusica, caminho);
         return playlist_controle.removerMusica(nomePlaylist, musica);
     }
 

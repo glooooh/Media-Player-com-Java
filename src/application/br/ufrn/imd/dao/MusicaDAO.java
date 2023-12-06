@@ -21,7 +21,7 @@ public class MusicaDAO {
     public void carregarMusicas() {
         String caminhoDir = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
-        String nomeArquivo = caminhoDir + separador + "usuarios.txt";
+        String nomeArquivo = caminhoDir + separador + "musicas.txt";
 
         try {
             File arquivoMusicas = new File(nomeArquivo);
@@ -35,15 +35,14 @@ public class MusicaDAO {
 
             String linha;
             while ((linha = br.readLine()) != null) {
-                // Supondo que o formato do arquivo seja "nome — artista — caminho"
-                String[] dadosMusica = linha.split(" — ");
+                // Supondo que o formato do arquivo seja "nome — caminho"
+                String[] dadosMusica = linha.split(" - ");
 
-                if (dadosMusica.length == 3) {
+                if (dadosMusica.length == 2) {
                     String nome = dadosMusica[0];
-                    String artista = dadosMusica[1];
-                    String caminho = dadosMusica[2];
+                    String caminho = dadosMusica[1];
 
-                    Musica musica = new Musica(nome, artista, caminho);
+                    Musica musica = new Musica(nome, caminho);
                     listaMusicas.add(musica);
                 }
             }
@@ -56,7 +55,7 @@ public class MusicaDAO {
 
     public boolean cadastrarMusica(Musica musicaNova) {
         for (Musica musica : listaMusicas) {
-            if (musicaNova.getNome().equals(musica.getNome()) && musicaNova.getArtista().equals(musica.getArtista())) {
+            if (musicaNova.getNome().equals(musica.getNome()) && musicaNova.getCaminho().equals(musica.getCaminho())) {
                 return false;
             }
         }
@@ -65,7 +64,7 @@ public class MusicaDAO {
 
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
-        String nomeArquivo = caminho + separador + "usuarios.txt";
+        String nomeArquivo = caminho + separador + "musicas.txt";
 
         try {
             File arquivoMusicas = new File(nomeArquivo);
@@ -78,7 +77,7 @@ public class MusicaDAO {
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Texto a ser escrito no arquivo
-            String texto = musicaNova.getNome() + " — " + musicaNova.getArtista() + " — " + musicaNova.getCaminho();
+            String texto = musicaNova.getNome() + " - " + musicaNova.getCaminho();
 
             // Escrever no arquivo
             bw.write(texto);
@@ -97,9 +96,9 @@ public class MusicaDAO {
         return listaMusicas;
     }
 
-    public Musica buscarMusica(String nome, String artista) {
+    public Musica buscarMusica(String nome, String caminho) {
         for (Musica musica : listaMusicas) {
-            if (nome.equals(musica.getNome()) && artista.equals(musica.getArtista())) {
+            if (nome.equals(musica.getNome()) && caminho.equals(musica.getCaminho())) {
                 return musica;
             }
         }
@@ -109,7 +108,7 @@ public class MusicaDAO {
     public boolean editarMusica(Musica musicaEditada, String novoAtributo, String tipoAtributo) {
         for (Musica musica : listaMusicas) {
             if ((musicaEditada.getNome()).equals(musica.getNome())
-                    && (musicaEditada.getArtista()).equals(musica.getArtista())) {
+                    && (musicaEditada.getCaminho()).equals(musica.getCaminho())) {
                 String caminhoDir = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
                 String nomeArquivo = caminhoDir + separador + "usuarios.txt";
@@ -126,13 +125,11 @@ public class MusicaDAO {
                     while (linha != null) {
                         // Falha de segurança
                         if (linha.indexOf(musicaEditada.getNome()) >= 0
-                                && linha.indexOf(musicaEditada.getArtista()) >= 0) {
+                                && linha.indexOf(musicaEditada.getCaminho()) >= 0) {
                             if (tipoAtributo.equals("N")) {
-                                linha = novoAtributo + " — " + musica.getArtista() + " — " + musica.getCaminho();
-                            } else if (tipoAtributo.equals("A")) {
-                                linha = musica.getNome() + " — " + novoAtributo + " — " + musica.getCaminho();
+                                linha = novoAtributo + " — " + musica.getCaminho();
                             } else if (tipoAtributo.equals("C")) {
-                                linha = musica.getNome() + " — " + musica.getArtista() + " — " + novoAtributo;
+                                linha = musica.getNome() + " — " + novoAtributo;
                             }
                             salvarLinhas.add(linha);
                         } else {
@@ -170,7 +167,7 @@ public class MusicaDAO {
     public boolean removerMusica(Musica musicaRemovida) {
         for (Musica musica : listaMusicas) {
             if ((musicaRemovida.getNome()).equals(musica.getNome())
-                    && (musicaRemovida.getArtista()).equals(musica.getArtista())) {
+                    && (musicaRemovida.getCaminho()).equals(musica.getCaminho())) {
                 String caminhoDir = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
                 String nomeArquivo = caminhoDir + separador + "usuarios.txt";
@@ -187,7 +184,7 @@ public class MusicaDAO {
                     while (linha != null) {
                         // Falha de segurança
                         if (linha.indexOf(musicaRemovida.getNome()) == 0
-                                || linha.indexOf(musicaRemovida.getArtista()) == 0) {
+                                || linha.indexOf(musicaRemovida.getCaminho()) == 0) {
                             salvarLinhas.add(linha);
                         }
                     }
