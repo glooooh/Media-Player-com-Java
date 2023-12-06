@@ -37,14 +37,22 @@ public class UsuarioControle {
         return usuarioDao.exibirUsuarios();
     }
 
-    public boolean editarUsuario(String login, String atributoNovo, String tipoAtributo) {
-        UsuarioDAO usuarioDao = new UsuarioDAO();
-        return usuarioDao.editarUsuario(login, atributoNovo, tipoAtributo);
+    public boolean editarAssinatura(UsuarioComum usuario) {
+        if (usuario.ehVIP()) {
+            return editarUsuario(usuario, "C", "T");
+        } else {
+            return editarUsuario(usuario, "V", "T");
+        }
     }
 
-    public boolean removerUsuario(String login, String senha) {
+    public boolean editarUsuario(UsuarioComum usuario, String atributoNovo, String tipoAtributo) {
         UsuarioDAO usuarioDao = new UsuarioDAO();
-        return usuarioDao.removerUsuario(login, senha);
+        return usuarioDao.editarUsuario(usuario, atributoNovo, tipoAtributo);
+    }
+
+    public boolean removerUsuario(UsuarioComum usuario, String senha) {
+        UsuarioDAO usuarioDao = new UsuarioDAO();
+        return usuarioDao.removerUsuario(usuario, senha);
     }
 
     public UsuarioComum fazerLogin(String login, String senha) {
@@ -54,7 +62,7 @@ public class UsuarioControle {
 
     public boolean cadastrarPlaylist(String nomePlaylist, UsuarioVIP usuarioLogado) {
         PlaylistControle playlist_controle = new PlaylistControle(usuarioLogado);
-        
+
         return playlist_controle.cadastrarPlaylist(nomePlaylist);
     }
 

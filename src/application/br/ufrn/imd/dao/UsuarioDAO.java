@@ -102,9 +102,9 @@ public class UsuarioDAO {
         return lista_de_usuarios;
     }
 
-    public boolean removerUsuario(String login, String senha) {
+    public boolean removerUsuario(UsuarioComum usuarioLogado, String senha) {
         for (UsuarioComum usuario : lista_de_usuarios) {
-            if (login.equals(usuario.getLogin()) && senha.equals(usuario.getSenha())) {
+            if ((usuarioLogado.getLogin()).equals(usuario.getLogin()) && senha.equals(usuario.getSenha())) {
                 String caminho = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
 
@@ -118,10 +118,13 @@ public class UsuarioDAO {
                     ArrayList<String> salvarLinhas = new ArrayList<>();
 
                     while (linha != null) {
+                        String palavras[] = linha.split(" ");
+
                         // Falha de segurança
-                        if (linha.indexOf(login) == 0 || linha.indexOf(senha) == 0) {
+                        if (palavras[0].equals(usuarioLogado.getLogin()) || palavras[1].equals(usuarioLogado.getSenha())) {
                             salvarLinhas.add(linha);
                         }
+                        linha = reader.readLine();
                     }
 
                     reader.close();
@@ -150,9 +153,9 @@ public class UsuarioDAO {
         return false;
     }
 
-    public boolean editarUsuario(String login, String atributoNovo, String tipoAtributo) {
+    public boolean editarUsuario(UsuarioComum usuarioLogado, String atributoNovo, String tipoAtributo) {
         for (UsuarioComum usuario : lista_de_usuarios) {
-            if (login.equals(usuario.getLogin())) {
+            if ((usuarioLogado.getLogin()).equals(usuario.getLogin())) {
                 String caminho = System.getProperty("user.dir");
                 String separador = System.getProperty("file.separator");
 
@@ -170,7 +173,7 @@ public class UsuarioDAO {
                     while (linha != null) {
                         String palavras[] = linha.split(" ");
 
-                        if (palavras[0].equals(login)) {
+                        if (palavras[0].equals(usuarioLogado.getLogin())) {
                             if (tipoAtributo.equals("N")) {
                                 linha = usuario.getLogin() + " " + usuario.getSenha() + " " + atributoNovo + " "
                                         + tipo;
