@@ -10,14 +10,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Esta classe representa um Data Access Object (DAO) para operações
+ * relacionadas a músicas.
+ * Gerencia o cadastro, exibição, busca, edição e remoção de músicas em um
+ * arquivo.
+ */
 public class MusicaDAO {
+    /** A lista de músicas carregadas ou gerenciadas pelo DAO. */
     private ArrayList<Musica> listaMusicas;
 
+    /**
+     * Construtor da classe. Inicializa a lista de músicas e carrega as músicas
+     * existentes.
+     */
     public MusicaDAO() {
         this.listaMusicas = new ArrayList<>();
         carregarMusicas();
     }
 
+    /**
+     * Carrega as músicas a partir de um arquivo.
+     */
     public void carregarMusicas() {
         String caminhoDir = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -53,6 +67,12 @@ public class MusicaDAO {
         }
     }
 
+    /**
+     * Cadastra uma nova música.
+     *
+     * @param musicaNova A música a ser cadastrada.
+     * @return True se o cadastro for bem-sucedido, false se a música já existir.
+     */
     public boolean cadastrarMusica(Musica musicaNova) {
         for (Musica musica : listaMusicas) {
             if (musicaNova.getNome().equals(musica.getNome()) && musicaNova.getCaminho().equals(musica.getCaminho())) {
@@ -72,8 +92,7 @@ public class MusicaDAO {
                 arquivoMusicas.createNewFile();
             }
 
-            FileWriter fw = new FileWriter(arquivoMusicas.getAbsoluteFile(), true); // true para adicionar no final do
-                                                                                    // arquivo
+            FileWriter fw = new FileWriter(arquivoMusicas.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Texto a ser escrito no arquivo
@@ -92,10 +111,22 @@ public class MusicaDAO {
         return true;
     }
 
+    /**
+     * Exibe a lista de músicas cadastradas.
+     *
+     * @return A lista de músicas.
+     */
     public ArrayList<Musica> exibirMusicas() {
         return listaMusicas;
     }
 
+    /**
+     * Busca uma música pelo nome e caminho.
+     *
+     * @param nome    O nome da música a ser buscada.
+     * @param caminho O caminho da música a ser buscada.
+     * @return A música encontrada ou null se não for encontrada.
+     */
     public Musica buscarMusica(String nome, String caminho) {
         for (Musica musica : listaMusicas) {
             if (nome.equals(musica.getNome()) && caminho.equals(musica.getCaminho())) {
@@ -105,6 +136,15 @@ public class MusicaDAO {
         return null;
     }
 
+    /**
+     * Edita uma música existente.
+     *
+     * @param musicaEditada A música a ser editada.
+     * @param novoAtributo  O novo valor do atributo a ser editado.
+     * @param tipoAtributo  O tipo de atributo a ser editado ("N" para nome, "C"
+     *                      para caminho).
+     * @return True se a edição for bem-sucedida, false caso contrário.
+     */
     public boolean editarMusica(Musica musicaEditada, String novoAtributo, String tipoAtributo) {
         for (Musica musica : listaMusicas) {
             if ((musicaEditada.getNome()).equals(musica.getNome())
@@ -127,9 +167,9 @@ public class MusicaDAO {
                         if (linha.indexOf(musicaEditada.getNome()) >= 0
                                 && linha.indexOf(musicaEditada.getCaminho()) >= 0) {
                             if (tipoAtributo.equals("N")) {
-                                linha = novoAtributo + " — " + musica.getCaminho();
+                                linha = novoAtributo + " - " + musica.getCaminho();
                             } else if (tipoAtributo.equals("C")) {
-                                linha = musica.getNome() + " — " + novoAtributo;
+                                linha = musica.getNome() + " - " + novoAtributo;
                             }
                             salvarLinhas.add(linha);
                         } else {
@@ -163,7 +203,16 @@ public class MusicaDAO {
         return false;
     }
 
-    /* TESTAR, VAI DAR ERRADO */
+    /**
+     * Remove uma música do sistema e atualiza o arquivo de usuários.
+     *
+     * Este método remove a música fornecida da lista de músicas e atualiza o
+     * arquivo de usuários
+     * para garantir a consistência dos dados.
+     *
+     * @param musicaRemovida A instância de Musica a ser removida do sistema.
+     * @return true se a remoção for bem-sucedida, false caso contrário.
+     */
     public boolean removerMusica(Musica musicaRemovida) {
         for (Musica musica : listaMusicas) {
             if ((musicaRemovida.getNome()).equals(musica.getNome())

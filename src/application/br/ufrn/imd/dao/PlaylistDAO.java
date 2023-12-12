@@ -12,14 +12,33 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Esta classe representa um Data Access Object (DAO) para operações
+ * relacionadas a playlists.
+ * Gerencia o cadastro, exibição, busca, edição e remoção de playlists em
+ * arquivos.
+ */
 public class PlaylistDAO {
-    ArrayList<Playlist> playlistsUsuario;
+    /** A lista de playlists carregadas ou gerenciadas pelo DAO. */
+    private ArrayList<Playlist> playlistsUsuario;
 
+    /**
+     * Construtor da classe. Inicializa a lista de playlists e carrega as playlists
+     * existentes para o usuário.
+     *
+     * @param usuario O usuário associado às playlists.
+     */
     public PlaylistDAO(UsuarioVIP usuario) {
         playlistsUsuario = new ArrayList<Playlist>();
         carregarPlaylists(usuario);
     }
 
+    /**
+     * Carrega as playlists do usuário a partir de arquivos.
+     *
+     * @param usuario O usuário associado às playlists.
+     * @return A lista de playlists carregadas.
+     */
     public ArrayList<Playlist> carregarPlaylists(UsuarioVIP usuario) {
         String caminhoDir = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -69,6 +88,12 @@ public class PlaylistDAO {
         return this.playlistsUsuario;
     }
 
+    /**
+     * Cadastra uma nova playlist para o usuário.
+     *
+     * @param playlist A playlist a ser cadastrada.
+     * @return True se o cadastro for bem-sucedido, false se a playlist já existir.
+     */
     public boolean cadastrarPlaylist(Playlist playlist) {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -76,8 +101,7 @@ public class PlaylistDAO {
                 caminho + separador + "Playlists" + separador + "playlist_" + playlist.getNome() + ".txt");
         try {
             arquivo.createNewFile();
-            FileWriter fw = new FileWriter(arquivo.getAbsoluteFile(), true); // true para adicionar no final do
-                                                                             // arquivo
+            FileWriter fw = new FileWriter(arquivo.getAbsoluteFile(), true); // true para adicionar no final do arquivo
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Texto a ser escrito no arquivo
@@ -96,6 +120,14 @@ public class PlaylistDAO {
         return true;
     }
 
+    /**
+     * Adiciona uma nova música à playlist.
+     *
+     * @param playlist   A playlist à qual a música será adicionada.
+     * @param musicaNova A música a ser adicionada.
+     * @return True se a adição for bem-sucedida, false se a música já existir na
+     *         playlist.
+     */
     public boolean adicionarMusica(Playlist playlist, Musica musicaNova) {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -135,6 +167,14 @@ public class PlaylistDAO {
         return true;
     }
 
+    /**
+     * Remove uma música da playlist.
+     *
+     * @param playlist       A playlist da qual a música será removida.
+     * @param musicaRemovida A música a ser removida.
+     * @return True se a remoção for bem-sucedida, false se a música não existir na
+     *         playlist.
+     */
     public boolean removerMusica(Playlist playlist, Musica musicaRemovida) {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -176,10 +216,23 @@ public class PlaylistDAO {
         }
     }
 
+    /**
+     * Exibe a lista de playlists associadas ao usuário.
+     *
+     * @return A lista de playlists do usuário.
+     */
     public ArrayList<Playlist> exibirPlaylists() {
         return playlistsUsuario;
     }
 
+    /**
+     * Edita o nome de uma playlist existente.
+     *
+     * @param playlist A playlist a ser editada.
+     * @param nomeNovo O novo nome da playlist.
+     * @return True se a edição for bem-sucedida, false se o novo nome já pertencer
+     *         a outra playlist.
+     */
     public boolean editarPlaylist(Playlist playlist, String nomeNovo) {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -197,6 +250,12 @@ public class PlaylistDAO {
         }
     }
 
+    /**
+     * Remove uma playlist existente.
+     *
+     * @param playlist A playlist a ser removida.
+     * @return True se a remoção for bem-sucedida, false se a playlist não existir.
+     */
     public boolean removerPlaylist(Playlist playlist) {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -211,6 +270,13 @@ public class PlaylistDAO {
         }
     }
 
+    /**
+     * Busca uma playlist pelo nome.
+     *
+     * @param playlistBuscada O nome da playlist a ser buscada.
+     * @param usuario         O usuário associado à playlist.
+     * @return A playlist encontrada ou null se não for encontrada.
+     */
     public Playlist buscarPlaylist(String playlistBuscada, UsuarioVIP usuario) {
         for (Playlist playlist : playlistsUsuario) {
             if (playlist.getNome().equals(playlistBuscada)) {

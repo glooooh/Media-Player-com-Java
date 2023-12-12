@@ -35,6 +35,9 @@ import javafx.stage.FileChooser;
 
 import javafx.util.Duration;
 
+/**
+ * Controlador para a interface gráfica do MusicPlayer.
+ */
 public class MusicPlayerControle {
 
 	@FXML
@@ -96,10 +99,20 @@ public class MusicPlayerControle {
 	private int musicaSelecionada;
 	private int playlistSelecionada;
 
+	/**
+	 * Inicializa o controlador.
+	 *
+	 * @param controller O controlador principal.
+	 */
 	@FXML
 	private void initialize(GerenciadorControle controller) {
 	}
 
+	/**
+	 * Define o controlador principal.
+	 *
+	 * @param controller O controlador principal.
+	 */
 	public void setGerenciadorControle(GerenciadorControle controller) {
 		this.controller = controller;
 		DiretorioControle diretorioControle = new DiretorioControle();
@@ -128,6 +141,12 @@ public class MusicPlayerControle {
 
 	}
 
+	/**
+	 * Carrega as playlists do usuário VIP na interface gráfica.
+	 * Este método é chamado durante a inicialização para exibir as playlists do
+	 * usuário VIP.
+	 * Se o usuário logado não for VIP, o método não faz nada.
+	 */
 	private void carregarPlaylists() {
 		if (controller.getUsuarioLogado().ehVIP()) {
 			PlaylistControle playlistControle = new PlaylistControle((UsuarioVIP) controller.getUsuarioLogado());
@@ -150,6 +169,11 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Exibe as músicas de uma playlist.
+	 *
+	 * @param playlist A playlist a ser exibida.
+	 */
 	public void carregarMusicasPlaylist(Playlist playlist) {
 		if (this.controller.getUsuarioLogado().ehVIP()) {
 
@@ -177,6 +201,17 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Exibe um diálogo para o usuário alterar seu nome.
+	 * Este método é chamado quando o usuário escolhe a opção de alterar o nome no
+	 * menu.
+	 * Um diálogo de entrada é exibido, permitindo que o usuário insira um novo
+	 * nome.
+	 * Após a confirmação, o nome do usuário é alterado no sistema e na interface
+	 * gráfica.
+	 * 
+	 * @param event O evento de clique que acionou a ação.
+	 */
 	@FXML
 	public void alterarNome(ActionEvent event) {
 		TextInputDialog dialog = new TextInputDialog();
@@ -197,6 +232,16 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Exibe um diálogo para o usuário alterar sua senha.
+	 * Este método é chamado quando o usuário escolhe a opção de alterar a senha no
+	 * menu.
+	 * Um diálogo de entrada de senha é exibido, permitindo que o usuário insira uma
+	 * nova senha.
+	 * Após a confirmação, a senha do usuário é alterada no sistema.
+	 * 
+	 * @param event O evento de clique que acionou a ação.
+	 */
 	@FXML
 	public void alterarSenha(ActionEvent event) {
 		TextInputDialog dialog = new TextInputDialog();
@@ -214,6 +259,16 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Exibe um diálogo para o usuário alterar sua assinatura (VIP ou comum).
+	 * Este método é chamado quando o usuário escolhe a opção de alterar a
+	 * assinatura no menu.
+	 * Um diálogo de confirmação é exibido, perguntando se o usuário deseja se
+	 * tornar VIP ou comum.
+	 * Após a confirmação, a assinatura do usuário é alterada no sistema.
+	 * 
+	 * @param event O evento de clique que acionou a ação.
+	 */
 	@FXML
 	public void alterarAssinatura(ActionEvent event) {
 		Dialog<ButtonType> dialog = new Dialog<>();
@@ -241,6 +296,9 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Altera o tipo de usuário na interface.
+	 */
 	public void alterarTipoUsuario() {
 		if (this.controller.getUsuarioLogado().ehVIP()) {
 			tipoUser.setText("VIP");
@@ -263,6 +321,11 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Processa o logout do usuário.
+	 *
+	 * @param event O evento de clique.
+	 */
 	@FXML
 	public void processarLogOut(ActionEvent event) {
 		Stage musicPlayerStage = (Stage) sairItem.getScene().getWindow();
@@ -288,6 +351,14 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Adiciona um ouvinte à lista de músicas nos diretórios, respondendo a
+	 * alterações na seleção.
+	 * Este método é chamado durante a inicialização para monitorar a seleção de
+	 * músicas na lista de diretórios.
+	 * Quando uma música é selecionada, a ação de tocar a música é acionada e a
+	 * seleção na lista de playlists é limpa.
+	 */
 	private void diretorioAdicionado() {
 		listaNomesMusicas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -306,6 +377,14 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Adiciona um ouvinte à lista de músicas em uma playlist, respondendo a
+	 * alterações na seleção.
+	 * Este método é chamado durante a inicialização para monitorar a seleção de
+	 * músicas na lista de playlists.
+	 * Quando uma música é selecionada, a ação de tocar a música é acionada e a
+	 * seleção na lista de músicas nos diretórios é limpa.
+	 */
 	private void listaMusicasPlaylistSelecionada() {
 		listaMusicasPlaylist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -328,6 +407,14 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Adiciona um ouvinte à lista de playlists, respondendo a alterações na
+	 * seleção.
+	 * Este método é chamado durante a inicialização para monitorar a seleção de
+	 * playlists.
+	 * Quando uma playlist é selecionada, a ação de exibir as músicas dessa playlist
+	 * é acionada.
+	 */
 	private void listaPlaylistsAdicionada() {
 		listaPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -340,6 +427,16 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Toca uma música com base no caminho do arquivo passado como parâmetro.
+	 * Se uma música já estiver sendo reproduzida, ela é interrompida para iniciar a
+	 * nova.
+	 * Atualiza o estado interno para indicar que a música está em execução.
+	 * Atualiza a exibição do botão de reprodução/pausa para indicar o estado atual.
+	 * Inicia o carregamento do progresso da música na barra de progresso.
+	 *
+	 * @param caminho O caminho do arquivo da música a ser tocada.
+	 */
 	private void tocarMusica(String caminho) {
 		File arquivoMusica = new File(caminho);
 
@@ -357,10 +454,24 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Define o nome do usuário na interface gráfica.
+	 * Obtém o nome do usuário logado a partir do controlador e o exibe no
+	 * componente de texto correspondente.
+	 */
 	public void setNomeUsuario() {
 		nomeUsuario.setText(controller.getUsuarioLogado().getNome());
 	}
 
+	/**
+	 * Abre um seletor de diretório para permitir que o usuário escolha uma pasta
+	 * contendo músicas.
+	 * Após a seleção da pasta, cadastra o diretório no banco de dados e exibe as
+	 * músicas correspondentes.
+	 * Se nenhuma pasta for selecionada, exibe um alerta de erro.
+	 *
+	 * @param event O evento de clique no botão para adicionar diretório.
+	 */
 	@FXML
 	void adicionarDiretorio(ActionEvent event) {
 		Stage primaryStage = new Stage();
@@ -378,6 +489,14 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Exibe na interface as músicas de uma playlist específica.
+	 * Limpa a lista de músicas da playlist, adiciona as músicas da playlist à
+	 * interface
+	 * e atualiza a lógica relacionada à seleção de músicas na lista.
+	 *
+	 * @param playlist A playlist a ser exibida.
+	 */
 	void exibirMusicasPlaylist(Playlist playlist) {
 		ObservableList<String> items = listaMusicasPlaylist.getItems();
 		ArrayList<Musica> musicasPlaylist = new ArrayList<>();
@@ -396,6 +515,16 @@ public class MusicPlayerControle {
 		listaMusicasPlaylistSelecionada();
 	}
 
+	/**
+	 * Exibe na interface as músicas provenientes dos diretórios cadastrados no
+	 * banco.
+	 * Limpa a lista de nomes de músicas na interface, adiciona os nomes das músicas
+	 * provenientes dos diretórios cadastrados e atualiza a lógica relacionada à
+	 * seleção de músicas na lista.
+	 *
+	 * @param diretorio_controle O controle de diretórios utilizado para obter as
+	 *                           músicas dos diretórios cadastrados.
+	 */
 	void exibirMusicas(DiretorioControle diretorio_controle) {
 		ObservableList<String> items = listaNomesMusicas.getItems();
 		ArrayList<Musica> listaMusicas = new ArrayList<>();
@@ -414,6 +543,15 @@ public class MusicPlayerControle {
 		controller.setListaMusicas(listaMusicas);
 	}
 
+	/**
+	 * Abre uma janela para selecionar e adicionar uma música à lista de reprodução.
+	 * Utiliza um FileChooser para permitir que o usuário selecione um arquivo de
+	 * música.
+	 * Após a seleção, cadastra a música no banco de dados, exibe a música na
+	 * interface e inicia sua reprodução.
+	 *
+	 * @param event O evento de clique do botão para adicionar música.
+	 */
 	@FXML
 	void adicionarMusica(ActionEvent event) {
 		Stage primaryStage = new Stage();
@@ -430,6 +568,13 @@ public class MusicPlayerControle {
 		tocarMusica(dadosMusica.toString());
 	}
 
+	/**
+	 * Abre uma janela para que o usuário insira o nome de uma nova playlist.
+	 * Cadastra a nova playlist no banco de dados associando-a ao usuário logado.
+	 * Em seguida, exibe a lista atualizada de playlists na interface.
+	 *
+	 * @param event O evento de clique do botão para adicionar uma playlist.
+	 */
 	@FXML
 	void adicionarPlaylist(ActionEvent event) {
 		TextInputDialog dialog = new TextInputDialog();
@@ -445,6 +590,14 @@ public class MusicPlayerControle {
 		});
 	}
 
+	/**
+	 * Exibe na interface as playlists associadas ao usuário logado.
+	 * Limpa a lista atual de playlists exibidas e preenche com as playlists do
+	 * usuário.
+	 *
+	 * @param usuario_controle O controle de usuários responsável por obter as
+	 *                         playlists do usuário logado.
+	 */
 	void exibirPlaylists(UsuarioControle usuario_controle) {
 		ObservableList<String> items = listaPlaylists.getItems();
 		ArrayList<Playlist> playlistsUsuario = new ArrayList<>();
@@ -461,6 +614,11 @@ public class MusicPlayerControle {
 		controller.setPlaylistsUsuario(playlistsUsuario);
 	}
 
+	/**
+	 * Toca ou pausa a música.
+	 *
+	 * @param event O evento de clique.
+	 */
 	@FXML
 	void pausarTocarMusica(ActionEvent event) {
 		if (running) {
@@ -474,6 +632,16 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Avança para a próxima música na lista de reprodução.
+	 * Se a lista de músicas do diretório estiver selecionada, avança para a próxima
+	 * música na lista.
+	 * Se a lista de músicas da playlist estiver selecionada, avança para a próxima
+	 * música na playlist.
+	 * Atualiza a seleção na interface e inicia a reprodução da música selecionada.
+	 *
+	 * @param event O evento que acionou o método.
+	 */
 	@FXML
 	void pularMusica(ActionEvent event) {
 		if (controller != null) {
@@ -495,6 +663,16 @@ public class MusicPlayerControle {
 		}
 	}
 
+	/**
+	 * Retrocede para a música anterior na lista de reprodução.
+	 * Se a lista de músicas do diretório estiver selecionada, retrocede para a
+	 * música anterior na lista.
+	 * Se a lista de músicas da playlist estiver selecionada, retrocede para a
+	 * música anterior na playlist.
+	 * Atualiza a seleção na interface e inicia a reprodução da música selecionada.
+	 *
+	 * @param event O evento que acionou o método.
+	 */
 	@FXML
 	void voltarMusica(ActionEvent event) {
 		if (controller != null) {
@@ -546,6 +724,11 @@ public class MusicPlayerControle {
 	// return null;
 	// }
 
+	/**
+	 * Adiciona uma música à playlist (somente para usuários VIP).
+	 *
+	 * @param event O evento de clique.
+	 */
 	@FXML
 	void adicionarMusicaPlaylist(ActionEvent event) {
 		// Verifica se o usuário é VIP
@@ -569,6 +752,9 @@ public class MusicPlayerControle {
 
 	}
 
+	/**
+	 * Carrega o progresso da música na barra de progresso.
+	 */
 	void carregarProgresso() {
 		mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
 			@Override
@@ -585,6 +771,13 @@ public class MusicPlayerControle {
 
 	}
 
+	/**
+	 * Exibe um alerta na interface.
+	 *
+	 * @param titulo   O título do alerta.
+	 * @param mensagem A mensagem do alerta.
+	 * @param tipo     O tipo do alerta.
+	 */
 	private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
 		Alert alerta = new Alert(tipo);
 		alerta.setTitle(titulo);

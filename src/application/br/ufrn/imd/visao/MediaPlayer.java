@@ -8,29 +8,43 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Classe principal que inicia a aplicação JavaFX do MediaPlayer.
+ */
 public class MediaPlayer extends Application {
 
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			// Carrega o arquivo FXML
-			FXMLLoader loader = new FXMLLoader(
-					getClass().getResource("/application/br/ufrn/imd/recursos/TelaLogin.fxml"));
-			// loader.setController(new LoginControle());
-			Parent root = loader.load();
+    /**
+     * Método principal que inicia a aplicação JavaFX.
+     *
+     * @param primaryStage O palco principal (Stage) da aplicação.
+     */
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            // Carrega o arquivo FXML
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/application/br/ufrn/imd/recursos/TelaLogin.fxml"));
+            // loader.setController(new LoginControle());
+            Parent root = loader.load();
 
-			// Configura o palco (Stage)
-			primaryStage.setTitle("Tela de Login");
-			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+            // Configura o palco (Stage)
+            primaryStage.setTitle("Tela de Login");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+    /**
+     * Método principal que inicia a execução da aplicação JavaFX.
+     *
+     * @param args Os argumentos da linha de comando (não são utilizados neste exemplo).
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
 
 	// @Override
 	// public void start(Stage primaryStage) {

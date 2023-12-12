@@ -14,14 +14,31 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * A classe UsuarioDAO é responsável por gerenciar a persistência de usuários,
+ * realizando operações como carregar, cadastrar, exibir, remover, editar e
+ * fazer login.
+ */
 public class UsuarioDAO {
+    /**
+     * Lista que armazena os usuários carregados.
+     */
     private ArrayList<UsuarioComum> lista_de_usuarios;
 
+    /**
+     * Construtor da classe UsuarioDAO. Inicializa a lista de usuários e carrega os
+     * usuários existentes.
+     */
     public UsuarioDAO() {
         lista_de_usuarios = new ArrayList<>();
         carregarUsuarios();
     }
 
+    /**
+     * Carrega os usuários a partir do arquivo "usuarios.txt".
+     * Cada linha do arquivo representa um usuário com os atributos: login, senha,
+     * nome e tipo (V para VIP, C para Comum).
+     */
     public void carregarUsuarios() {
         String caminho = System.getProperty("user.dir");
         String separador = System.getProperty("file.separator");
@@ -54,6 +71,13 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Cadastra um novo usuário na lista de usuários e no arquivo "usuarios.txt".
+     *
+     * @param usuarioNovo O novo usuário a ser cadastrado.
+     * @return True se o cadastro for bem-sucedido, false se o login do usuário já
+     *         existir.
+     */
     public boolean cadastrarUsuario(UsuarioComum usuarioNovo) {
         for (UsuarioComum usuario : lista_de_usuarios) {
             if (usuarioNovo.getLogin().equals(usuario.getLogin())) {
@@ -98,10 +122,24 @@ public class UsuarioDAO {
         return true;
     }
 
+    /**
+     * Exibe a lista de usuários carregados.
+     *
+     * @return A lista de usuários.
+     */
     public ArrayList<UsuarioComum> exibirUsuarios() {
         return lista_de_usuarios;
     }
 
+    /**
+     * Remove um usuário da lista e do arquivo "usuarios.txt" se o usuário logado
+     * fornecer a senha correta.
+     *
+     * @param usuarioLogado O usuário logado que está solicitando a remoção.
+     * @param senha         A senha do usuário logado para autenticação.
+     * @return True se a remoção for bem-sucedida, false se a senha estiver
+     *         incorreta ou o usuário não existir.
+     */
     public boolean removerUsuario(UsuarioComum usuarioLogado, String senha) {
         for (UsuarioComum usuario : lista_de_usuarios) {
             if ((usuarioLogado.getLogin()).equals(usuario.getLogin()) && senha.equals(usuario.getSenha())) {
@@ -121,7 +159,8 @@ public class UsuarioDAO {
                         String palavras[] = linha.split(" ");
 
                         // Falha de segurança
-                        if (palavras[0].equals(usuarioLogado.getLogin()) || palavras[1].equals(usuarioLogado.getSenha())) {
+                        if (palavras[0].equals(usuarioLogado.getLogin())
+                                || palavras[1].equals(usuarioLogado.getSenha())) {
                             salvarLinhas.add(linha);
                         }
                         linha = reader.readLine();
@@ -153,6 +192,16 @@ public class UsuarioDAO {
         return false;
     }
 
+    /**
+     * Edita um atributo do usuário logado (login, senha ou nome) na lista e no
+     * arquivo "usuarios.txt".
+     *
+     * @param usuarioLogado O usuário logado que está solicitando a edição.
+     * @param atributoNovo  O novo valor do atributo a ser editado.
+     * @param tipoAtributo  O tipo de atributo a ser editado (N para nome, S para
+     *                      senha, T para login).
+     * @return True se a edição for bem-sucedida, false se o usuário não existir.
+     */
     public boolean editarUsuario(UsuarioComum usuarioLogado, String atributoNovo, String tipoAtributo) {
         for (UsuarioComum usuario : lista_de_usuarios) {
             if ((usuarioLogado.getLogin()).equals(usuario.getLogin())) {
@@ -217,6 +266,14 @@ public class UsuarioDAO {
         return false;
     }
 
+    /**
+     * Faz login de um usuário com o login e senha fornecidos.
+     *
+     * @param login O login do usuário.
+     * @param senha A senha do usuário.
+     * @return O usuário logado se as credenciais estiverem corretas, null se as
+     *         credenciais estiverem incorretas.
+     */
     public UsuarioComum fazerLoginUsuario(String login, String senha) {
         for (UsuarioComum usuario : lista_de_usuarios) {
             if (login.equals(usuario.getLogin()) && usuario.fazerLogin(senha)) {

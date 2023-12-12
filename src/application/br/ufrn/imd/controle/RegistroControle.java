@@ -1,20 +1,22 @@
 package application.br.ufrn.imd.controle;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
+/**
+ * Classe responsável pelo controle da interface de registro.
+ */
 public class RegistroControle {
+
 	@FXML
 	private TextField campoUsuario;
 
@@ -27,6 +29,9 @@ public class RegistroControle {
 	@FXML
 	private ChoiceBox<String> choiceBox;
 
+	/**
+	 * Inicializa a ChoiceBox com as opções "Comum" e "VIP".
+	 */
 	@FXML
 	public void initialize() {
 		if (choiceBox != null) {
@@ -35,7 +40,11 @@ public class RegistroControle {
 		}
 	}
 
-	// Método para processar o login
+	/**
+	 * Método para processar o login, direcionando para a tela de login.
+	 *
+	 * @throws IOException se houver um problema ao carregar a tela de login.
+	 */
 	@FXML
 	public void processarLogin() throws IOException {
 		Stage loginStage = new Stage();
@@ -48,13 +57,16 @@ public class RegistroControle {
 		loginStage.setTitle("Tela de Registro");
 		loginStage.setScene(new Scene(root, 600, 400));
 		loginStage.show();
+
 		RegistroControle registroControle = new RegistroControle();
 		loader.setController(registroControle);
 
 		registroStage.close();
 	}
 
-	// Método para processar o registro
+	/**
+	 * Método para processar o registro do usuário.
+	 */
 	@FXML
 	public void processarRegistro() {
 		String nome = campoNome.getText();
@@ -64,16 +76,13 @@ public class RegistroControle {
 
 		if (nome.isEmpty() || login.isEmpty() || senha.isEmpty()) {
 			exibirAlerta("Erro", "Por favor, preencha todos os campos!", Alert.AlertType.ERROR);
+			return;
 		}
 
-		if (tipo.equals("VIP")) {
-			tipo = "V";
-		} else {
-			tipo = "C";
-		}
+		tipo = tipo.equals("VIP") ? "V" : "C";
 
-		UsuarioControle usuario_controle = new UsuarioControle();
-		boolean cadastroRealizado = usuario_controle.cadastrarUsuarioNoBanco(nome, login, senha, tipo);
+		UsuarioControle usuarioControle = new UsuarioControle();
+		boolean cadastroRealizado = usuarioControle.cadastrarUsuarioNoBanco(nome, login, senha, tipo);
 
 		if (cadastroRealizado) {
 			exibirAlerta("Sucesso", "Registro Efetuado com Sucesso", Alert.AlertType.INFORMATION);
@@ -82,6 +91,13 @@ public class RegistroControle {
 		}
 	}
 
+	/**
+	 * Método para exibir um alerta na interface.
+	 *
+	 * @param titulo   O título do alerta.
+	 * @param mensagem A mensagem a ser exibida no alerta.
+	 * @param tipo     O tipo de alerta (INFORMATION, ERROR, WARNING, etc.).
+	 */
 	private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
 		Alert alerta = new Alert(tipo);
 		alerta.setTitle(titulo);
